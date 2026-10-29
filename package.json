@@ -1,0 +1,18 @@
+{
+  "name": "entrench-studionet",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Frontend-free constitutional amendment threshold primitive for stable StudioNet 61999",
+  "scripts": {
+    "cli": "genlayer",
+    "network:check": "node scripts/network-guard.cjs",
+    "preflight": "python3 scripts/preflight.py",
+    "test:offline": "python3 -m unittest discover -s tests -p test_offline.py -v",
+    "test:direct": "python3 -m pytest tests/test_direct.py -v",
+    "deploy:core": "bash scripts/deploy.sh contracts/entrench.py",
+    "deploy:consumer": "bash scripts/deploy.sh contracts/consumer_gate.py"
+  },
+  "devDependencies": {
+    "genlayer": "0.39.1"
+  }
+}

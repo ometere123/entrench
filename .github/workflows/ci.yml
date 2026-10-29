@@ -1,0 +1,23 @@
+name: Entrench verified build
+on:
+  push:
+  pull_request:
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm ci
+      - run: python3 scripts/preflight.py
+      - run: python3 -m unittest discover -s tests -p test_offline.py -v
+      - run: python3 -m pip install -r requirements-direct.txt
+      - run: genvm-lint lint contracts/entrench.py
+      - run: genvm-lint lint contracts/consumer_gate.py
+      - run: python3 -m pytest tests/test_direct.py -v
+      # Production RPC deliberately excluded from CI signing, funding and writes.
