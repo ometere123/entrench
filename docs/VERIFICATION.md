@@ -14,7 +14,7 @@ The following checks were executed locally against the working source:
 | Local CLI package | `genlayer@0.39.1` installed |
 | Stable RPC read-only `eth_chainId` | PASS: `61999` |
 | `git diff --cached --check` | PASS |
-| GitHub Actions on current commit | PENDING_FIRST_PUSH |
+| GitHub Actions, first published source commit | **SUCCESS** — run `40893524450` at `710a85029ef37788b78cb0e16c3adfff0207e0d9` |
 | Real StudioNet deploy + finalized lifecycle | NOT_EXECUTED |
 
 GenVM semantic validation used the linter's cached compatible runtime after
@@ -22,6 +22,9 @@ its version lookup returned HTTP 403 and the fallback bundle was downloaded.
 Direct Mode explicitly pinned the stable `v0.2.12` SDK artifact; it did
 **not** use the linter fallback for those 20 contract execution tests.
 Neither testing method is a substitute for live multi-validator finality.
+
+GitHub CI proof:
+`https://github.com/ometere123/entrench/actions/runs/40893524450`
 
 At validation time:
 
