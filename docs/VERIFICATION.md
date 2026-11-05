@@ -56,8 +56,8 @@ post-deadline execution; it remains explicitly test-only.
 
 The source/test-variant commit `c806390a342b81f06dfa18ff71c2478fc9579df0`
 passed [`run 42080046282`](https://github.com/ometere123/entrench/actions/runs/42080046282).
-The final evidence commit `d0af34d169b686d2ddd16f9e49212d3065e4349b`
-passed [`run 42109276609`](https://github.com/ometere123/entrench/actions/runs/42109276609).
+The final evidence commit `ace15762f8cc497f69e2f4fc4dc5bf0845fde2a4`
+passed [`run 42110683396`](https://github.com/ometere123/entrench/actions/runs/42110683396).
 The previous run failed at the preflight hash check because Windows CRLF bytes
 were not preserved in the Git blob; `.gitattributes` and the committed source
 blob now make the parity check deterministic across Windows and Linux.
