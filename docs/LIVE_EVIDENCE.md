@@ -78,3 +78,49 @@ remaining live removal gate is independently captured. The 75% protected
 path is now live-verified through the `E` expansion above; only the 90%
 removal classification, five-vote queue and 24-hour execution remain
 unverified because the network has not reached consensus on a removal.
+
+## Removal-consensus root-cause investigation
+
+The latest bounded removal retry was inspected as a full transaction object,
+not only through the explorer summary:
+
+- [`0x2f8feff1215f3d483709307e6fc38353087cf96578f566cefe0803eeb38f484e`](https://explorer-studio.genlayer.com/tx/0x2f8feff1215f3d483709307e6fc38353087cf96578f566cefe0803eeb38f484e)
+  finalized as `MAJORITY_DISAGREE`.
+- The leader executed with `SUCCESS` and no GenVM error.
+- The vote map contained three `disagree` votes, one `agree` vote and one
+  `idle` validator. The three disagreeing validator receipts had
+  `execution_result: SUCCESS`, no `genvm_result.error_code`, empty stdout and
+  stderr, and `nondet_disagree: 0`. The idle validator reported only
+  `CONSENSUS_VALIDATOR_QUORUM_REACHED`, which is cancellation after quorum,
+  not the cause of the disagreement.
+- The earlier M-tier, disguised-R and clear-R attempts show the same pattern:
+  successful leader execution followed by successful validator disagreement;
+  none produced a stored proposal or a state transition.
+
+This establishes that the live failure is a validator-level rejection of the
+leader's consensus predicate, not a leader VM crash, malformed transaction,
+GenVM runtime error, or RPC finalization failure. It does **not** establish
+whether a validator rejected because the normalized classification vector did
+not exactly match, because the adversarial audit returned uncertainty or a
+misclassification, or because an internal response was malformed. The stable
+RPC exposes the validator vote and execution envelope but not the internal
+`exec_prompt` responses or the boolean rejection branch. The documented
+`gen_dbg_traceTransaction` method is also unavailable on this RPC
+(`-32601 Method not found`), so no deeper receipt trace can substantiate one
+of those sub-causes.
+
+The stable Direct Mode suite reproduces each branch independently: a leader N
+versus validator R result is rejected; a validator audit marking a hidden
+removal is rejected; malformed leader responses become terminal U/blocked
+proposals; and the multi-principle `NR` case maps deterministically to the
+REMOVAL class. The full suite remains 26/26, including the exact
+`available_at - 1` and `available_at` removal-delay boundaries. These are
+controlled test inputs, not live validator observations.
+
+No production contract correction is applied from this evidence. Changing
+vector equality, accepting audit uncertainty, or trusting the leader would
+make removal liveness appear better by weakening the independent safety gate.
+The production `REMOVAL_DELAY` therefore remains 86400 seconds and the
+shortened 900-second test-only variant is not deployed while the live
+semantic disagreement subtype remains unobservable. There is no migration
+impact from this investigation because neither deployable contract changed.
