@@ -14,7 +14,7 @@ chain RPC.
 | RPC | `https://studio.genlayer.com/api` |
 | Local CLI | `genlayer@0.39.1` |
 | Stable Direct Mode bundle | `v0.2.12` |
-| Deployable source commit | `071a0b1` (later documentation-only commits do not change either contract) |
+| Deployable source commit | `3282664aa9ed3504563773b96d743affb83bb163` (later documentation-only commits do not change either contract) |
 
 ## Finalized deployments and exact source parity
 

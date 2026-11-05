@@ -38,6 +38,7 @@ custody or central decision service.
 
 - 20/20 offline tests and 26/26 stable GenVM Direct Mode tests pass.
 - GenVM lint, validation and schema checks pass for both contracts.
+- GitHub Actions is green on the byte-stable deployed-source commit: [`run 42034248325`](https://github.com/ometere123/entrench/actions/runs/42034248325).
 - Deployed source bytes match the final contract hashes in
   `SOURCE_SHA256_MANIFEST.json`.
 - The live ordinary amendment, immutable-charter rollback, typed consumer

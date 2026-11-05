@@ -46,10 +46,12 @@ live 75%/90% transition or 24-hour public-chain timelock execution.
 
 ## CI
 
-The earlier published source commit passed GitHub Actions:
-[`run 40893524450`](https://github.com/ometere123/entrench/actions/runs/40893524450).
-The final documentation/evidence commit must be checked again after push; the
-final report records the exact run URL if the hosted workflow completes.
+The byte-stability correction passed GitHub Actions on the exact deployed-source
+commit `3282664aa9ed3504563773b96d743affb83bb163`:
+[`run 42034248325`](https://github.com/ometere123/entrench/actions/runs/42034248325).
+The previous run failed at the preflight hash check because Windows CRLF bytes
+were not preserved in the Git blob; `.gitattributes` and the committed source
+blob now make the parity check deterministic across Windows and Linux.
 
 GenVM semantic validation used the linter's compatible cached runtime after
 its version lookup returned HTTP 403 and a fallback bundle was downloaded.
