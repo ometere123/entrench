@@ -53,6 +53,7 @@ The complete reproducible sequence is in [docs/REVIEWER_DEMO.md](docs/REVIEWER_D
 - `tests/test_offline.py` — pure invariant and adversarial payload checks.
 - `tests/test_direct.py` — genuine GenVM Direct Mode test scenarios.
 - `scripts/network-guard.cjs` — exact production RPC chain ID and local CLI check.
+- `scripts/receipt-summary.cjs` — compact finalized-receipt verifier for live evidence.
 - `scripts/preflight.py` — non-deploying source and configuration verification.
 - `scripts/deploy.sh` / `scripts/deploy.ps1` — deliberately explicit production deploy wrappers.
 - `.github/workflows/ci.yml` — reproducible pinned Node/Python checks.
@@ -75,7 +76,9 @@ No frontend, backend, custodial wallet, Docker dependency or central decision AP
 | genvm-linter | **`0.11.0`** |
 
 The global CLI is never installed, replaced or invoked by the project scripts.
-All commands use `npm exec -- genlayer` from the local dependency.
+`scripts/local-cli.cjs` resolves the checked-in local package directly and
+fails if its version is not exactly `0.39.1`; `npm run cli -- ...` uses that
+wrapper rather than allowing an npm/global fallback.
 
 ## Local verification
 
@@ -126,9 +129,17 @@ contracts/entrench.py` (or `consumer_gate.py`) after setting
   membership churn or emergency admin override is included.
 - The contract does not transfer money or claim legal enforceability.
 - Untrusted policy text remains on-chain and public; do not put secrets into it.
-- Deployment, validator receipts, and mainnet use are not claimed until independently verified.
+The primary Entrench deployment is live at
+[`0xE545b98d1c1Fce30421b64E55D71159984f7fd8d`](https://explorer-studio.genlayer.com/address/0xE545b98d1c1Fce30421b64E55D71159984f7fd8d)
+and the typed consumer at
+[`0xE1D0845B7A07e562C3f623Cb6668933AC14F363c`](https://explorer-studio.genlayer.com/address/0xE1D0845B7A07e562C3f623Cb6668933AC14F363c).
+Both are source-byte matched and finalized on StudioNet 61999. The live
+ordinary and consumer paths are proven, while the live M/R semantic attempts
+reached `MAJORITY_DISAGREE`; therefore the 75%/90% and 24-hour live lifecycle
+remains explicitly unresolved rather than claimed.
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and
 [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for details. Recorded build results
 (20 offline tests, 26 genuine Direct Mode tests, both semantic validations
-passed) are in [docs/VERIFICATION.md](docs/VERIFICATION.md).
+passed) and live limitations are in [docs/VERIFICATION.md](docs/VERIFICATION.md)
+and [docs/LIVE_EVIDENCE.md](docs/LIVE_EVIDENCE.md).

@@ -1,14 +1,14 @@
-# Verified build evidence — 2026-11-05
+# Verified build and deployment evidence — 2026-11-05
 
-The following checks were executed locally against the working source:
+## Local quality gates
 
 | Check | Observed result |
 | --- | --- |
 | Python source/preflight/hash manifest | PASS |
 | Offline `unittest` | **20/20 PASS** |
 | GenVM Direct Mode `sdk_version=v0.2.12` | **26/26 PASS** |
-| `genvm-lint lint` Entrench | PASS (3 static checks) |
-| `genvm-lint lint` consumer | PASS (3 static checks) |
+| `genvm-lint lint` Entrench | PASS (3 static checks; UTF-8 output mode on Windows) |
+| `genvm-lint lint` consumer | PASS (3 static checks; UTF-8 output mode on Windows) |
 | `genvm-lint validate` Entrench | PASS (16 methods: 11 write/5 view) |
 | `genvm-lint validate` consumer | PASS (2 methods: 1 write/1 view) |
 | Local CLI package | `genlayer@0.39.1` installed |
@@ -17,34 +17,42 @@ The following checks were executed locally against the working source:
 | GenVM schema Entrench | PASS: 16 methods, 11 write / 5 view |
 | GenVM schema consumer | PASS: 2 methods, 1 write / 1 view |
 | Source SHA-256 manifest | PASS: matches both current deployable files |
-| `git diff --cached --check` | PASS |
-| GitHub Actions, first published source commit | **SUCCESS** — run `40893524450` at `710a85029ef37788b78cb0e16c3adfff0207e0d9` |
-| Real StudioNet deploy + finalized lifecycle | NOT_EXECUTED |
+| `npm ci` | PASS |
+| `git diff --check` | PASS |
 
-GenVM semantic validation used the linter's cached compatible runtime after
-its version lookup returned HTTP 403 and the fallback bundle was downloaded.
-Direct Mode explicitly pinned the stable `v0.2.12` SDK artifact; it did
-**not** use the linter fallback for those 26 contract execution tests.
-Neither testing method is a substitute for live multi-validator finality.
+CI sets `GENVM_VERSION=v0.2.12` for lint, validation and schema extraction so
+artifact discovery cannot silently select a newer preview bundle.
 
-GitHub CI proof:
-`https://github.com/ometere123/entrench/actions/runs/40893524450`
+The Direct Mode suite includes exact queue/removal-time boundaries, malformed
+semantic verdicts, prompt-delimiter escaping, validator disagreement, hidden
+removal, prompt injection, cross-head rejection, replay, and consumer behavior.
+Mocked adversarial observations are test inputs, not live validator evidence.
 
-At the earlier validation commit, the source hashes were:
+## Live stable StudioNet evidence
 
-```text
-Entrench SHA-256:
-c08135fc25cef9a634b5a9e6c4a7172466433d43ac14b782ead3fe282ebd2f55
+The actual RPC returned chain ID `61999`; no preview network was used. Both
+deployments finalized with `MAJORITY_AGREE` and leader execution `SUCCESS`, and
+both deployed source byte arrays matched the local source hashes. The full
+receipt ledger and lifecycle links are in [`LIVE_EVIDENCE.md`](LIVE_EVIDENCE.md).
 
-Consumer SHA-256:
-64912659e9488e06626f5ffc9f838c08ceba31c89ede3a1c2d5e8c9a0f013401
-```
+The live ordinary amendment and typed consumer path succeeded. A post-seal
+mutation rolled back as `IMMUTABLE_CHARTER`, and consumer replay rolled back as
+`ONE_SHOT` without changing the one-shot state.
 
-Current source hashes are maintained in
-[`SOURCE_SHA256_MANIFEST.json`](../SOURCE_SHA256_MANIFEST.json) and verified by
-`scripts/preflight.py`. They identify source bytes, not deployed-contract
-parity. After any contract edit, rerun preflight and update the manifest before
-deployment.
+The live M-tier and R-tier attempts finalized as `MAJORITY_DISAGREE`, so no
+material/removal proposal was stored. That outcome is correctly recorded as a
+remaining deployment-verification blocker: this repository does not claim a
+live 75%/90% transition or 24-hour public-chain timelock execution.
 
-No StudioNet deployment or finalized lifecycle evidence is claimed by this
-file yet; see `docs/LIVE_EVIDENCE.md`.
+## CI
+
+The earlier published source commit passed GitHub Actions:
+[`run 40893524450`](https://github.com/ometere123/entrench/actions/runs/40893524450).
+The final documentation/evidence commit must be checked again after push; the
+final report records the exact run URL if the hosted workflow completes.
+
+GenVM semantic validation used the linter's compatible cached runtime after
+its version lookup returned HTTP 403 and a fallback bundle was downloaded.
+Direct Mode explicitly pinned `v0.2.12`; it did not use the linter fallback for
+those contract execution tests. Neither local test layer substitutes for live
+multi-validator finality.

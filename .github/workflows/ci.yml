@@ -5,6 +5,10 @@ on:
 jobs:
   contract:
     runs-on: ubuntu-latest
+    env:
+      # Match the stable StudioNet GenVM bundle selected by the contract
+      # dependency header; never let linter artifact discovery choose preview.
+      GENVM_VERSION: v0.2.12
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5

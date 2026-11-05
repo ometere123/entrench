@@ -49,3 +49,13 @@ The pinned Direct Mode harness confirms that the stable runner's transaction
 clock is used by `datetime.now(timezone.utc)`: the removal gate rejects at
 `available_at - 1` and accepts at exactly `available_at`. This is a Direct Mode
 runtime check, not a claim that a public-chain timelock has elapsed.
+
+## Live verification boundary
+
+The deployed ordinary path and typed consumer were finalized on StudioNet and
+source-byte matched. Two M-tier attempts and one removal attempt instead
+finalized as `MAJORITY_DISAGREE`; the contract correctly stored no proposal.
+This demonstrates fail-closed consensus, but it does not prove a live 75%/90%
+classification or public-chain timelock. The repository therefore reports that
+remaining proof gap instead of weakening the semantic gate or inventing a
+receipt.

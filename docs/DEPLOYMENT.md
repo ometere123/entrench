@@ -79,4 +79,9 @@ requester authorization must add that authorization in their own wrapper.
 5. Record the transaction terminal status and execution result separately.
 6. Never describe a merely ACCEPTED operation as FINALIZED.
 
-Deployment evidence is intentionally not fabricated in this repository.
+The current verified deployment ledger is in
+[`docs/LIVE_EVIDENCE.md`](LIVE_EVIDENCE.md). It records the two finalized
+addresses, transaction receipts, exact source-byte parity, ordinary lifecycle,
+typed consumer execution and replay rollback. It also records the live
+M/R `MAJORITY_DISAGREE` blocker; do not turn that fail-closed result into a
+fabricated successful protected/removal lifecycle.

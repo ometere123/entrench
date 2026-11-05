@@ -81,4 +81,8 @@ validators reached those conclusions. Do not describe them as live votes.
 - Blocked 3-of-5 removal, queued 5-of-5 removal and timelock rejection.
 - Ordinary and M-tier lifecycle + consumer one-shot/replay proof.
 
-An evidence file should say `NOT_EXECUTED` until each event genuinely occurs.
+The current live receipt ledger is [`docs/LIVE_EVIDENCE.md`](LIVE_EVIDENCE.md).
+It records the finalized ordinary and consumer paths, the immutable-charter
+rollback, the one-shot replay rollback, and the exact live M/R disagreements.
+The M/R queue and 24-hour execution rows remain intentionally unresolved
+because no live M/R proposal reached contract storage.

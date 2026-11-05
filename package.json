@@ -6,6 +6,7 @@
   "scripts": {
     "cli": "node scripts/local-cli.cjs",
     "network:check": "node scripts/network-guard.cjs",
+    "receipt:summary": "node scripts/receipt-summary.cjs",
     "preflight": "python3 scripts/preflight.py",
     "test:offline": "python3 -m unittest discover -s tests -p test_offline.py -v",
     "test:direct": "python3 -m pytest tests/test_direct.py -v",
