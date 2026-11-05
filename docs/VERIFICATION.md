@@ -55,8 +55,8 @@ access to the encrypted funded signer accounts and is not claimed as complete.
 
 The source/test-variant commit `c806390a342b81f06dfa18ff71c2478fc9579df0`
 passed [`run 42080046282`](https://github.com/ometere123/entrench/actions/runs/42080046282).
-The current documentation commit `bd544e4a18d904b5d03fdc876d2eb3bb9645b386`
-passed [`run 42081116940`](https://github.com/ometere123/entrench/actions/runs/42081116940).
+The latest evidence commit `69eca618cca47a0414e1c0db961825c1b42a9562`
+passed [`run 42086674678`](https://github.com/ometere123/entrench/actions/runs/42086674678).
 The previous run failed at the preflight hash check because Windows CRLF bytes
 were not preserved in the Git blob; `.gitattributes` and the committed source
 blob now make the parity check deterministic across Windows and Linux.
