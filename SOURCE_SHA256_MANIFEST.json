@@ -6,6 +6,10 @@
     },
     "contracts/entrench.py": {
       "sha256": "4f504b32ff3246db0c72382dbeec2c93070caac6018cd7d861f93fa6235c8899"
+    },
+    "contracts/test_only_900/entrench.py": {
+      "sha256": "670326b4dd4e2d7577706b523e506e694aff1065d8fd9da970f079f90b46d4ce",
+      "test_only": true
     }
   }
 }

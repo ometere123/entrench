@@ -25,10 +25,13 @@ jobs:
       - run: node scripts/network-guard.cjs
       - run: node scripts/local-cli.cjs --version
       - run: genvm-lint lint contracts/entrench.py
+      - run: genvm-lint lint contracts/test_only_900/entrench.py
       - run: genvm-lint lint contracts/consumer_gate.py
       - run: genvm-lint check contracts/entrench.py --json
+      - run: genvm-lint check contracts/test_only_900/entrench.py --json
       - run: genvm-lint check contracts/consumer_gate.py --json
       - run: genvm-lint schema contracts/entrench.py --json
+      - run: genvm-lint schema contracts/test_only_900/entrench.py --json
       - run: genvm-lint schema contracts/consumer_gate.py --json
       - run: python3 -m pytest tests/test_direct.py -v
       # Production RPC deliberately excluded from CI signing, funding and writes.

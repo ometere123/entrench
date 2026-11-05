@@ -145,5 +145,15 @@ class ContractArchitectureTests(unittest.TestCase):
         self.assertEqual(config["explorer"], "https://explorer-studio.genlayer.com")
 
 
+class TestOnlyVariantTests(unittest.TestCase):
+    def test_short_timelock_variant_is_exactly_isolated(self):
+        variant = SOURCE.parent / "test_only_900" / "entrench.py"
+        variant_text = variant.read_text(encoding="utf-8")
+        self.assertIn("REMOVAL_DELAY = 900", variant_text)
+        self.assertNotIn("REMOVAL_DELAY = 86400", variant_text)
+        expected = TEXT.replace("REMOVAL_DELAY = 86400", "REMOVAL_DELAY = 900")
+        self.assertEqual(variant_text, expected)
+
+
 if __name__ == "__main__":
     unittest.main()

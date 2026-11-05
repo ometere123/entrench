@@ -56,6 +56,8 @@ The complete reproducible sequence is in [docs/REVIEWER_DEMO.md](docs/REVIEWER_D
 - `scripts/receipt-summary.cjs` — compact finalized-receipt verifier for live evidence.
 - `scripts/preflight.py` — non-deploying source and configuration verification.
 - `scripts/deploy.sh` / `scripts/deploy.ps1` — deliberately explicit production deploy wrappers.
+- `contracts/test_only_900/entrench.py` — isolated 900-second integration source; never the production contract.
+- `scripts/deploy_test_timelock.ps1` — explicit test-only guard for the shortened-delay deployment.
 - `.github/workflows/ci.yml` — reproducible pinned Node/Python checks.
 - `docs/SECURITY.md` — assumptions, failure modes and mitigations.
 
@@ -71,8 +73,8 @@ No frontend, backend, custodial wallet, Docker dependency or central decision AP
 | Explorer | **`https://explorer-studio.genlayer.com`** |
 | GenLayer CLI | **local `genlayer@0.39.1`** |
 | GenVM Direct Mode | **`v0.2.12`** |
-| genlayer-test | **`0.29.2`** |
-| genlayer-py | **`0.16.3`** |
+| genlayer-test | **`0.29.0`** |
+| genlayer-py | **`0.11.0`** |
 | genvm-linter | **`0.11.0`** |
 
 The global CLI is never installed, replaced or invoked by the project scripts.
@@ -99,7 +101,12 @@ to switch networks.
 On Windows, use the corresponding `.venv\\Scripts\\python.exe` and see the
 pinned test-runner compatibility note in the deployment guide. The checked-in
 `tests/conftest.py` only repairs the Windows temporary-file cleanup defect in
-`genlayer-test==0.29.2`; it does not alter contract execution.
+`genlayer-test==0.29.0`; it does not alter contract execution.
+
+The shortened-delay source is for integration testing only. It is isolated
+under `contracts/test_only_900/`, has a separate manifest entry, and must never
+be presented as proof that the canonical 86400-second production timelock has
+elapsed.
 
 ## Production deployment
 
@@ -129,17 +136,17 @@ contracts/entrench.py` (or `consumer_gate.py`) after setting
   membership churn or emergency admin override is included.
 - The contract does not transfer money or claim legal enforceability.
 - Untrusted policy text remains on-chain and public; do not put secrets into it.
-The primary Entrench deployment is live at
-[`0xE545b98d1c1Fce30421b64E55D71159984f7fd8d`](https://explorer-studio.genlayer.com/address/0xE545b98d1c1Fce30421b64E55D71159984f7fd8d)
+The corrected production Entrench deployment is live at
+[`0x0fd3823b7f08F73275AABf60e88bEc9A1c507314`](https://explorer-studio.genlayer.com/address/0x0fd3823b7f08F73275AABf60e88bEc9A1c507314)
 and the typed consumer at
-[`0xE1D0845B7A07e562C3f623Cb6668933AC14F363c`](https://explorer-studio.genlayer.com/address/0xE1D0845B7A07e562C3f623Cb6668933AC14F363c).
-Both are source-byte matched and finalized on StudioNet 61999. The live
-ordinary, protected-tier and consumer paths are proven, while the live removal
-semantic attempts reached `MAJORITY_DISAGREE`; therefore the 90% and 24-hour
-live removal lifecycle remains explicitly unresolved rather than claimed.
+[`0x4a51a85C33604B9B7F1C9347bF944853fE8F632f`](https://explorer-studio.genlayer.com/address/0x4a51a85C33604B9B7F1C9347bF944853fE8F632f).
+Both are source-byte matched and finalized on StudioNet 61999. The corrected
+production path has a live `R` classification, five-vote queue, and finalized
+early `TIMELOCK_ACTIVE` rejection; it was then canceled rather than waiting
+24 hours. The earlier address and disagreements remain historical evidence.
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and
 [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for details. Recorded build results
-(20 offline tests, 26 genuine Direct Mode tests, both semantic validations
-passed) and live limitations are in [docs/VERIFICATION.md](docs/VERIFICATION.md)
+(22 offline tests, 27 genuine Direct Mode tests, stable lint/validation/schema
+checks) and live limitations are in [docs/VERIFICATION.md](docs/VERIFICATION.md)
 and [docs/LIVE_EVIDENCE.md](docs/LIVE_EVIDENCE.md).

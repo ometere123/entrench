@@ -26,9 +26,10 @@ install or invoke a global CLI. The network guard reads the actual chain ID
 from the stable RPC before any broadcast. A local install is invalid if
 `node_modules/.bin/genlayer.cmd --version` is not exactly `0.39.1`.
 
-The pinned Direct Mode tests use `sdk_version="v0.2.12"` to avoid
+The pinned Direct Mode tests use `genlayer-test==0.29.0`, `genlayer-py==0.11.0`
+and `sdk_version="v0.2.12"` to avoid
 accidentally using a later GenVM artifact. On native Windows, an older
-`genlayer-test==0.29.2` file-descriptor unlink issue may require a
+the pinned runner's file-descriptor unlink issue may require a
 compatibility shim; running tests in Linux CI avoids that platform-specific
 loader behavior. The checked-in shim is test infrastructure only and is not
 imported by deployed contracts. Do not bypass tests because of a missing GenVM
@@ -80,8 +81,25 @@ requester authorization must add that authorization in their own wrapper.
 6. Never describe a merely ACCEPTED operation as FINALIZED.
 
 The current verified deployment ledger is in
-[`docs/LIVE_EVIDENCE.md`](LIVE_EVIDENCE.md). It records the two finalized
-addresses, transaction receipts, exact source-byte parity, ordinary lifecycle,
-typed consumer execution and replay rollback. It also records the live
-M/R `MAJORITY_DISAGREE` blocker; do not turn that fail-closed result into a
-fabricated successful protected/removal lifecycle.
+[`docs/LIVE_EVIDENCE.md`](LIVE_EVIDENCE.md). It records the corrected production
+addresses, transaction receipts, exact source-byte parity, genuine `R` queue,
+86400-second early rejection, ordinary lifecycle, typed consumer execution and
+replay rollback. Historical M/R disagreements remain labeled as historical.
+
+## Test-only 900-second integration variant
+
+`contracts/test_only_900/entrench.py` is an isolated copy whose only contract
+logic difference is `REMOVAL_DELAY = 900`. It is never the canonical production
+source and must not be described as evidence that the production 24-hour delay
+has elapsed. The guarded Windows command is:
+
+```powershell
+$env:ENTRENCH_TEST_ONLY_ACK = '900'
+.\scripts\deploy_test_timelock.ps1
+```
+
+The guard rechecks the exact source, manifest, stable RPC chain ID and local
+CLI. At the time of this handoff, stable StudioNet finalized test-variant
+deployment requests as `contract_error / invalid_contract` and created no
+contract. Do not record a returned address unless a future runtime correction
+produces FINALIZED + leader execution `SUCCESS` and exact source parity.

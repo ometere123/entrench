@@ -1,6 +1,6 @@
 """Test-runner compatibility for the pinned Direct Mode SDK on native Windows.
 
-genlayer-test==0.29.2 replaces fd 0 with a temporary file and immediately
+genlayer-test==0.29.0 replaces fd 0 with a temporary file and immediately
 unlinks that file. Windows keeps the duplicated fd open, so the unlink raises
 WinError 32 before any contract code is loaded. Keep the file until the pinned
 runner restores stdin, then remove it. This is test infrastructure only; it

@@ -79,7 +79,7 @@ path is now live-verified through the `E` expansion above; only the 90%
 removal classification, five-vote queue and 24-hour execution remain
 unverified because the network has not reached consensus on a removal.
 
-## Removal-consensus root-cause investigation
+## Historical removal-consensus root-cause investigation
 
 The latest bounded removal retry was inspected as a full transaction object,
 not only through the explorer summary:
@@ -114,14 +114,53 @@ The stable Direct Mode suite reproduces each branch independently: a leader N
 versus validator R result is rejected; a validator audit marking a hidden
 removal is rejected; malformed leader responses become terminal U/blocked
 proposals; and the multi-principle `NR` case maps deterministically to the
-REMOVAL class. The full suite remains 26/26, including the exact
+REMOVAL class. The historical suite was 26/26; the final pinned suite is 27/27, including the exact
 `available_at - 1` and `available_at` removal-delay boundaries. These are
 controlled test inputs, not live validator observations.
 
-No production contract correction is applied from this evidence. Changing
+No production contract correction was applied from those receipts alone. Changing
 vector equality, accepting audit uncertainty, or trusting the leader would
 make removal liveness appear better by weakening the independent safety gate.
 The production `REMOVAL_DELAY` therefore remains 86400 seconds and the
 shortened 900-second test-only variant is not deployed while the live
 semantic disagreement subtype remains unobservable. There is no migration
-impact from this investigation because neither deployable contract changed.
+impact from that historical investigation because the later correction was a
+fresh immutable deployment; the old deployed address was not mutated.
+
+## Corrected production deployment and removal gate
+
+The source correction was committed at `25b9ca8b563bce9689117567cdf6832902fc43da`.
+It changes only the semantic prompts: removal-first precedence is explicit in
+both leader and independent-validator prompts, while exact vector agreement,
+adversarial-audit rejection, thresholds and `REMOVAL_DELAY = 86400` are
+unchanged. The prior deployed addresses remain historical; these are the
+corrected production addresses.
+
+| Contract | Address | Deployment transaction | Source parity |
+| --- | --- | --- | --- |
+| Corrected Entrench | [`0x0fd3823b7f08F73275AABf60e88bEc9A1c507314`](https://explorer-studio.genlayer.com/address/0x0fd3823b7f08F73275AABf60e88bEc9A1c507314) | [`0x5f91ffd0e8ff6854b2d03c12ece6f426e08b45821c4e07dff5d4879d5bb458da`](https://explorer-studio.genlayer.com/tx/0x5f91ffd0e8ff6854b2d03c12ece6f426e08b45821c4e07dff5d4879d5bb458da) | FINALIZED, `MAJORITY_AGREE`, leader `SUCCESS`; SHA-256 `4f504b32ff3246db0c72382dbeec2c93070caac6018cd7d861f93fa6235c8899`, exact remote-byte match |
+| Corrected ConstitutionalActionGate | [`0x4a51a85C33604B9B7F1C9347bF944853fE8F632f`](https://explorer-studio.genlayer.com/address/0x4a51a85C33604B9B7F1C9347bF944853fE8F632f) | [`0x84682211416ec86309796c82a1ec57b7eb6b0736a4627614113222d1af2b359d`](https://explorer-studio.genlayer.com/tx/0x84682211416ec86309796c82a1ec57b7eb6b0736a4627614113222d1af2b359d) | FINALIZED, `MAJORITY_AGREE`, leader `SUCCESS`; SHA-256 `29024997d1331874cb44e5d3db7b3dc689fcbfcfb761a9543a8c76dd42c7396a`, exact remote-byte match |
+
+The corrected five-wallet charter was finalized with genesis `0xb041b873be8b2b76e689ea65e83153b6ebe9beaed726e1fc9fefaf76d9365f94`, principle `0xddf2d511714873e86e7e42c5299689c2db2c9f6d7070ea2c3df9908b93aacc4d`, five member-add transactions, five finalized attestations, and seal `0x0c74b1559b00f984fa70f91166fd7475811f064eb132a0309245629daba834d4`. The sealed readback reported thresholds `[51,75,90]`, `removal_delay_seconds = 86400`, chain `61999`, and head `99e8d51c3b45e13b1c3d2f47a32816e71fdfc340b50360ad4b63f8a8dc21fd2a`.
+
+The first corrected live removal proposal was transaction [`0x3faedadc74f86f9753aa891cc1fc8fda593c016b35f503c98f0f9bb35dbe9f5b`](https://explorer-studio.genlayer.com/tx/0x3faedadc74f86f9753aa891cc1fc8fda593c016b35f503c98f0f9bb35dbe9f5b), FINALIZED `MAJORITY_AGREE`, leader `SUCCESS`, with receipt votes 3 agree / 2 disagree. Readback: proposal `1`, vector `R`, `REMOVAL`, `90%`, `required_yes = 5`, exact frozen base head, status `OPEN`.
+
+Four approvals were finalized. Queue attempt [`0x91612792f5ab7336dbd5754017e19a798dd270ef5b1c02b041f73a6207427e15`](https://explorer-studio.genlayer.com/tx/0x91612792f5ab7336dbd5754017e19a798dd270ef5b1c02b041f73a6207427e15) finalized consensus but leader rollback `INSUFFICIENT_APPROVALS`; no queue mutation occurred. The fifth approval and queue [`0x5e4bc1b5722eff30180550d3c6b48cfba24b8e0f96f6fd4f12e421ee2897236f`](https://explorer-studio.genlayer.com/tx/0x5e4bc1b5722eff30180550d3c6b48cfba24b8e0f96f6fd4f12e421ee2897236f) finalized with leader `SUCCESS`. Queue `created_at` was `2026-11-05T16:56:27.926688+00:00` / epoch `1793897787`; readback `available_at = 1793984187`, exactly `queue_time + 86400`.
+
+Immediate execute [`0x23dd6e2698c624b0ff0c69961ca1df293a6cb7c36e611b5c87cb849b12fdb77d`](https://explorer-studio.genlayer.com/tx/0x23dd6e2698c624b0ff0c69961ca1df293a6cb7c36e611b5c87cb849b12fdb77d) finalized `MAJORITY_AGREE` with leader rollback `TIMELOCK_ACTIVE`; the proposal remained queued. Owner cancellation [`0x3013d244a1b6d45c7710318c53d2a73881e26f0c5cc0174c4d406b32a11e75a1`](https://explorer-studio.genlayer.com/tx/0x3013d244a1b6d45c7710318c53d2a73881e26f0c5cc0174c4d406b32a11e75a1) then finalized successfully with proposal status `CANCELLED`.
+
+For reusable functionality, ordinary proposal `2` finalized as `N`/`ORDINARY`, then queue [`0x04a369f29b598cfd67df4c4561fb9abfb8a19af596e920ba3eadbd0103264801`](https://explorer-studio.genlayer.com/tx/0x04a369f29b598cfd67df4c4561fb9abfb8a19af596e920ba3eadbd0103264801) and execute [`0x23f9b3cd63546db67704b9ce905fde1704efe60900634ffa7f0f02647cef65d3`](https://explorer-studio.genlayer.com/tx/0x23f9b3cd63546db67704b9ce905fde1704efe60900634ffa7f0f02647cef65d3) finalized successfully, producing head `f3b7dfe3e72bbb567e37918a275c16a8dafe9cf99714dddf7cfbce131a87ede2`. The typed consumer was deployed against the exact address/proposal/head; `perform` [`0x6a7c3d6982fe6fc05a1bb4a83ab8ca1777297f45ab064ea8db21edc8466c4ffd`](https://explorer-studio.genlayer.com/tx/0x6a7c3d6982fe6fc05a1bb4a83ab8ca1777297f45ab064ea8db21edc8466c4ffd) finalized successfully and `did_perform == true`. Replay [`0xcef3d4bcb1cf14b8daf1dbaba97fe7864dee24a74e4c7bde3414e69469d8cf7a`](https://explorer-studio.genlayer.com/tx/0xcef3d4bcb1cf14b8daf1dbaba97fe7864dee24a74e4c7bde3414e69469d8cf7a) finalized with leader rollback `ONE_SHOT`; readback remained `true`.
+
+## Test-only 900-second deployment boundary
+
+The isolated source `contracts/test_only_900/entrench.py` is byte-for-byte the
+production source except for `REMOVAL_DELAY = 900`; its manifest hash is
+`670326b4dd4e2d7577706b523e506e694aff1065d8fd9da970f079f90b46d4ce`. It passed
+stable v0.2.12 lint, validation and schema checks. Six guarded deployment
+requests were independently finalized by consensus but each had leader
+`contract_error` with `result.payload = invalid_contract`; the RPC returned no
+usable contract code at any returned address. These are failed diagnostic
+transactions, not deployment addresses. No 900-second lifecycle, five-wallet
+test charter, or shortened-delay execution is claimed. The precise remaining
+blocker is stable runtime admission of this otherwise locally valid source;
+the production contract remains at 86400.

@@ -26,6 +26,7 @@
 | Large prompt or on-chain history abuse | Bounded policy/rules; one live proposal per member per head |
 | Policy text creates a fake prompt boundary | Prompt payloads are JSON-encoded and `<`/`>` are escaped before insertion; validators receive the same frozen texts |
 | Consumer front-run of `perform()` | Deliberately accepted as permissionless because the gate is non-value-bearing; callers needing ownership must wrap it with their own authorization |
+| Test-only shortened timelock confused with production | Variant is isolated under `contracts/test_only_900/`, has a separate manifest entry and guard, and is never a production address |
 
 ## Honest guarantees
 
@@ -52,11 +53,10 @@ runtime check, not a claim that a public-chain timelock has elapsed.
 
 ## Live verification boundary
 
-The deployed ordinary path, protected-tier expansion, and typed consumer were
-finalized on StudioNet and source-byte matched. Multiple M/R attempts,
-including a clear removal after the protected head advanced, finalized as
-`MAJORITY_DISAGREE`; the contract correctly stored no removal proposal. This
-demonstrates fail-closed consensus and proves the live 75% path, but it does
-not prove a live 90% classification or public-chain timelock. The repository
-therefore reports that remaining proof gap instead of weakening the semantic
-gate or inventing a receipt.
+The corrected production ordinary path, genuine `R` classification, five-wallet
+threshold gate, 86400-second queue timestamp, early timelock rejection, and
+typed consumer were finalized on StudioNet and source-byte matched. The live
+production removal was canceled after the early rejection, so the full 24-hour
+wait is not claimed. The isolated 900-second source passes local checks but its
+stable deployment attempts returned `invalid_contract` before a contract was
+created; this remains an explicit runtime blocker, not a security bypass.

@@ -82,8 +82,12 @@ validators reached those conclusions. Do not describe them as live votes.
 - Ordinary and M-tier lifecycle + consumer one-shot/replay proof.
 
 The current live receipt ledger is [`docs/LIVE_EVIDENCE.md`](LIVE_EVIDENCE.md).
+It now records the corrected production `R` classification, four-approval
+queue rejection, five-approval queue, exact 86400-second `available_at`, early+`TIMELOCK_ACTIVE`, ordinary lifecycle, typed consumer and one-shot replay.
 It records the finalized ordinary and protected-tier expansion paths, the
 immutable-charter rollback, the one-shot replay rollback, superseded-head
-readbacks, and the exact live M/R disagreements. The removal queue and
-24-hour execution rows remain intentionally unresolved because no live
-removal proposal reached contract storage.
+readbacks, and the exact live M/R disagreements. The production removal was
+canceled after the early rejection, so the full 24-hour wait is not claimed.
+The isolated 900-second source is test-only; its stable deployment currently
+returns `invalid_contract` before a contract is created, so no shortened
+lifecycle is presented as live evidence.
