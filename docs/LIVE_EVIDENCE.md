@@ -66,6 +66,7 @@ reached `MAJORITY_DISAGREE`. The observed transactions were:
 - M-tier retry: [`0x76b4f990322a42922ad13e1c9d38961fa6a32242064ea3ef062caa5445ca12c0`](https://explorer-studio.genlayer.com/tx/0x76b4f990322a42922ad13e1c9d38961fa6a32242064ea3ef062caa5445ca12c0)
 - R-tier disguised removal: [`0x0de1ba9e68b131ae3708bcbd4786e5a5d6a272cd5b368bb4a80a9e36029de4b7`](https://explorer-studio.genlayer.com/tx/0x0de1ba9e68b131ae3708bcbd4786e5a5d6a272cd5b368bb4a80a9e36029de4b7)
 - Clear removal against the post-expansion head: [`0xee608ecf0e7229d2680eb82c8b043265c7d0b6e4c9b257ba6b8a2cae2bd5cee0`](https://explorer-studio.genlayer.com/tx/0xee608ecf0e7229d2680eb82c8b043265c7d0b6e4c9b257ba6b8a2cae2bd5cee0)
+- Removal retry against the same post-expansion head: [`0x2f8feff1215f3d483709307e6fc38353087cf96578f566cefe0803eeb38f484e`](https://explorer-studio.genlayer.com/tx/0x2f8feff1215f3d483709307e6fc38353087cf96578f566cefe0803eeb38f484e)
 
 This is a genuine fail-closed network result, not evidence that the removal
 classification succeeded. Consequently, this ledger does **not** claim a live
