@@ -81,17 +81,22 @@ validators reached those conclusions. Do not describe them as live votes.
 - Blocked 3-of-5 removal, queued 5-of-5 removal and timelock rejection.
 - Ordinary and M-tier lifecycle + consumer one-shot/replay proof.
 
-The current live receipt ledger is [`docs/LIVE_EVIDENCE.md`](LIVE_EVIDENCE.md).
-It now records the corrected production `R` classification, four-approval
-queue rejection, five-approval queue, exact 86400-second `available_at`, early+`TIMELOCK_ACTIVE`, ordinary lifecycle, typed consumer and one-shot replay.
-It records the finalized ordinary and protected-tier expansion paths, the
-immutable-charter rollback, the one-shot replay rollback, superseded-head
-readbacks, and the exact live M/R disagreements. The production removal was
-canceled after the early rejection, so the full 24-hour wait is not claimed.
-The isolated 900-second source is test-only; its latest deployment is
-source-matched at `0xF5D85F57b6095aAe3d06D64AE7f847866EB28e1C`, but no
-shortened lifecycle is presented as a separate completed integration test: the
-five-wallet removal reached `R`, rejected four approvals, queued at exactly
-`queue_time + 900`, rejected premature execution, and executed after the
-deadline. This is not evidence that the canonical production 86400-second
-timelock elapsed.
+The authoritative receipt ledger is [`docs/LIVE_EVIDENCE.md`](LIVE_EVIDENCE.md).
+The corrected production deployment finalized an `R` removal classification, rejected
+queueing with four approvals, accepted five approvals, and set `available_at`
+to exactly `queue_time + 86400`. Immediate execution failed with
+`TIMELOCK_ACTIVE`; the removal was then canceled. The production 24-hour
+waiting period and post-deadline execution are **not** claimed as live-verified.
+
+The separate test-only contract at
+`0xF5D85F57b6095aAe3d06D64AE7f847866EB28e1C` differs by using a
+900-second removal delay. Its finalized five-wallet lifecycle includes an
+`R` classification, four-approval rejection, five-vote queue,
+`queue_time + 900` deadline, premature-execution rejection and successful
+post-deadline execution. This is a completed **test-only integration proof**,
+not evidence that production's 24-hour delay elapsed.
+
+The production evidence also covers ordinary and protected-tier `E`
+amendment execution, charter immutability, typed consumer success,
+one-shot replay rejection and superseded-head checks. Historical failed M/R
+semantic assessments remain documented as failures, not successes.
