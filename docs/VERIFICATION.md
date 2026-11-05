@@ -46,19 +46,17 @@ The corrected live removal finalized as `R`/90%, required five approvals, reject
 four-approval queueing, queued with `available_at = queue_time + 86400`, and
 rejected immediate execution with `TIMELOCK_ACTIVE`. It was canceled afterward,
 so the full production 24-hour wait was not claimed. The shortened test-only
-source passed local lint/validation/schema but every stable deployment attempt
-returned `contract_error / invalid_contract` and created no contract; there is
-no fabricated 900-second live lifecycle.
+source passed local lint/validation/schema and the latest stable deployment
+finalized successfully at `0xF5D85F57b6095aAe3d06D64AE7f847866EB28e1C` with
+exact source parity. Its five-wallet 900-second lifecycle remains pending
+access to the encrypted funded signer accounts and is not claimed as complete.
 
 ## CI
 
-The removal-first correction passed GitHub Actions on source commit
-`25b9ca8b563bce9689117567cdf6832902fc43da`:
-[`run 42063888925`](https://github.com/ometere123/entrench/actions/runs/42063888925).
 The source/test-variant commit `c806390a342b81f06dfa18ff71c2478fc9579df0`
-also passed: [`run 42080046282`](https://github.com/ometere123/entrench/actions/runs/42080046282).
-The later documentation-only commit `1a1c12204feee86e2b42fb7eff70df21992954a1`
-passed [`run 42080563148`](https://github.com/ometere123/entrench/actions/runs/42080563148).
+passed [`run 42080046282`](https://github.com/ometere123/entrench/actions/runs/42080046282).
+The current documentation commit `bd544e4a18d904b5d03fdc876d2eb3bb9645b386`
+passed [`run 42081116940`](https://github.com/ometere123/entrench/actions/runs/42081116940).
 The previous run failed at the preflight hash check because Windows CRLF bytes
 were not preserved in the Git blob; `.gitattributes` and the committed source
 blob now make the parity check deterministic across Windows and Linux.

@@ -16,8 +16,9 @@ ordinary, protected-tier, removal-classification, timelock-gate and consumer
 paths are finalized on stable StudioNet 61999 with exact source byte parity.
 The production removal was queued with `available_at = queue_time + 86400` and
 rejected early with `TIMELOCK_ACTIVE`; it was canceled rather than waiting 24
-hours. A separate 900-second test source is documented but stable deployment
-currently returns `invalid_contract`, so no shortened lifecycle is claimed.
+hours. A separate source-matched 900-second test deployment exists solely for
+the shortened integration lifecycle; it is not production evidence and does
+not prove that the canonical 24-hour timelock elapsed.
 
 ## Repository
 
@@ -41,7 +42,7 @@ custody or central decision service.
 - 22/22 offline tests and 27/27 stable GenVM Direct Mode tests pass.
 - GenVM lint, validation and schema checks pass for production, consumer and
   the isolated 900-second source.
-- GitHub Actions is green for source commit `c806390a342b81f06dfa18ff71c2478fc9579df0`: [`run 42080046282`](https://github.com/ometere123/entrench/actions/runs/42080046282), and for the later documentation-only commit `1a1c12204feee86e2b42fb7eff70df21992954a1`: [`run 42080563148`](https://github.com/ometere123/entrench/actions/runs/42080563148).
+- GitHub Actions is green for source/test-variant commit `c806390a342b81f06dfa18ff71c2478fc9579df0`: [`run 42080046282`](https://github.com/ometere123/entrench/actions/runs/42080046282), and for the later documentation commit `bd544e4a18d904b5d03fdc876d2eb3bb9645b386`: [`run 42081116940`](https://github.com/ometere123/entrench/actions/runs/42081116940).
 - Deployed source bytes match the final contract hashes in
   `SOURCE_SHA256_MANIFEST.json`.
 - The live ordinary amendment, immutable-charter rollback, typed consumer
@@ -50,5 +51,6 @@ custody or central decision service.
 - A live protected-tier `E` proposal reached 75%, four approvals and execution.
 - The corrected live removal reached `R`/90%, rejected four approvals, queued
   with the exact 86400-second delay and rejected premature execution. The
-  remaining blocker is stable runtime rejection of the isolated 900-second
-  source as `invalid_contract`; no test-only address or lifecycle is claimed.
+  latest test-only deployment is source-matched at
+  `0xF5D85F57b6095aAe3d06D64AE7f847866EB28e1C`; its five-wallet lifecycle is
+  still pending signer access and is not claimed here as completed.

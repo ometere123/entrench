@@ -14,7 +14,7 @@ chain RPC.
 | RPC | `https://studio.genlayer.com/api` |
 | Local CLI | `genlayer@0.39.1` |
 | Stable Direct Mode bundle | `v0.2.12` |
-| Deployable source commit | `3282664aa9ed3504563773b96d743affb83bb163` (later documentation-only commits do not change either contract) |
+| Deployable source commit | `c806390a342b81f06dfa18ff71c2478fc9579df0` (later documentation-only commits do not change either contract) |
 
 ## Finalized deployments and exact source parity
 
@@ -121,15 +121,14 @@ controlled test inputs, not live validator observations.
 No production contract correction was applied from those receipts alone. Changing
 vector equality, accepting audit uncertainty, or trusting the leader would
 make removal liveness appear better by weakening the independent safety gate.
-The production `REMOVAL_DELAY` therefore remains 86400 seconds and the
-shortened 900-second test-only variant is not deployed while the live
-semantic disagreement subtype remains unobservable. There is no migration
-impact from that historical investigation because the later correction was a
-fresh immutable deployment; the old deployed address was not mutated.
+The production `REMOVAL_DELAY` therefore remains 86400 seconds. There is no
+migration impact from that historical investigation because the later
+correction was a fresh immutable deployment; the old deployed address was not
+mutated.
 
 ## Corrected production deployment and removal gate
 
-The source correction was committed at `25b9ca8b563bce9689117567cdf6832902fc43da`.
+The source correction was included in source/test-variant commit `c806390a342b81f06dfa18ff71c2478fc9579df0`.
 It changes only the semantic prompts: removal-first precedence is explicit in
 both leader and independent-validator prompts, while exact vector agreement,
 adversarial-audit rejection, thresholds and `REMOVAL_DELAY = 86400` are
@@ -151,16 +150,31 @@ Immediate execute [`0x23dd6e2698c624b0ff0c69961ca1df293a6cb7c36e611b5c87cb849b12
 
 For reusable functionality, ordinary proposal `2` finalized as `N`/`ORDINARY`, then queue [`0x04a369f29b598cfd67df4c4561fb9abfb8a19af596e920ba3eadbd0103264801`](https://explorer-studio.genlayer.com/tx/0x04a369f29b598cfd67df4c4561fb9abfb8a19af596e920ba3eadbd0103264801) and execute [`0x23f9b3cd63546db67704b9ce905fde1704efe60900634ffa7f0f02647cef65d3`](https://explorer-studio.genlayer.com/tx/0x23f9b3cd63546db67704b9ce905fde1704efe60900634ffa7f0f02647cef65d3) finalized successfully, producing head `f3b7dfe3e72bbb567e37918a275c16a8dafe9cf99714dddf7cfbce131a87ede2`. The typed consumer was deployed against the exact address/proposal/head; `perform` [`0x6a7c3d6982fe6fc05a1bb4a83ab8ca1777297f45ab064ea8db21edc8466c4ffd`](https://explorer-studio.genlayer.com/tx/0x6a7c3d6982fe6fc05a1bb4a83ab8ca1777297f45ab064ea8db21edc8466c4ffd) finalized successfully and `did_perform == true`. Replay [`0xcef3d4bcb1cf14b8daf1dbaba97fe7864dee24a74e4c7bde3414e69469d8cf7a`](https://explorer-studio.genlayer.com/tx/0xcef3d4bcb1cf14b8daf1dbaba97fe7864dee24a74e4c7bde3414e69469d8cf7a) finalized with leader rollback `ONE_SHOT`; readback remained `true`.
 
-## Test-only 900-second deployment boundary
+## Test-only 900-second deployment and lifecycle
 
 The isolated source `contracts/test_only_900/entrench.py` is byte-for-byte the
 production source except for `REMOVAL_DELAY = 900`; its manifest hash is
 `670326b4dd4e2d7577706b523e506e694aff1065d8fd9da970f079f90b46d4ce`. It passed
-stable v0.2.12 lint, validation and schema checks. Six guarded deployment
-requests were independently finalized by consensus but each had leader
-`contract_error` with `result.payload = invalid_contract`; the RPC returned no
-usable contract code at any returned address. These are failed diagnostic
-transactions, not deployment addresses. No 900-second lifecycle, five-wallet
-test charter, or shortened-delay execution is claimed. The precise remaining
-blocker is stable runtime admission of this otherwise locally valid source;
-the production contract remains at 86400.
+stable v0.2.12 lint, validation and schema checks. The first three guarded
+deployment requests were finalized with leader `contract_error` and
+`result.payload = invalid_contract`; those returned no usable contract code.
+The subsequent three requests finalized with leader `SUCCESS`, and the latest
+source-matched test-only address is
+`0xF5D85F57b6095aAe3d06D64AE7f847866EB28e1C`. Its deployed bytes are exactly
+22017 bytes and match SHA-256
+`670326b4dd4e2d7577706b523e506e694aff1065d8fd9da970f079f90b46d4ce`.
+
+The latest successful deployment has been read back with
+`removal_delay_seconds = 900`, chain `61999`, and an initially unsealed
+charter. The successful test-only deployment receipts are:
+
+| Address | Deployment transaction | Created (UTC) | Receipt |
+| --- | --- | --- | --- |
+| `0xcA271Ae9970EA7d5477aF81f8137897B763530Bb` | [`0xfd98a2801b8d8b7e9b6b5c2f5c970822b6396fdaadfff29635e5dfabcacecd28`](https://explorer-studio.genlayer.com/tx/0xfd98a2801b8d8b7e9b6b5c2f5c970822b6396fdaadfff29635e5dfabcacecd28) | 2026-11-05T17:34:14Z | FINALIZED, `MAJORITY_AGREE`, leader `SUCCESS` |
+| `0x075D03Aecc9fB329183e0a49b431b33EE34A610D` | [`0xd005b9eece5ffc2cae189a3252c5444b9ff930404ef18a5ac02bdd9449a8b8fc`](https://explorer-studio.genlayer.com/tx/0xd005b9eece5ffc2cae189a3252c5444b9ff930404ef18a5ac02bdd9449a8b8fc) | 2026-11-05T17:35:49Z | FINALIZED, `MAJORITY_AGREE`, leader `SUCCESS` |
+| `0xF5D85F57b6095aAe3d06D64AE7f847866EB28e1C` | [`0xfbbe67b015c78b9439508d50e29787c0fb47dba6c60f31ba1f0bd5ecfe313c36`](https://explorer-studio.genlayer.com/tx/0xfbbe67b015c78b9439508d50e29787c0fb47dba6c60f31ba1f0bd5ecfe313c36) | 2026-11-05T17:40:07Z | FINALIZED, `MAJORITY_AGREE`, leader `SUCCESS` |
+
+The five-wallet 900-second lifecycle is pending access to the encrypted
+funded signer accounts. This is an operational evidence gap, not a contract
+security bypass. It is not production evidence and cannot establish that the
+canonical 86400-second production timelock has elapsed.

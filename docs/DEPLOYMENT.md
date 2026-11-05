@@ -99,7 +99,10 @@ $env:ENTRENCH_TEST_ONLY_ACK = '900'
 ```
 
 The guard rechecks the exact source, manifest, stable RPC chain ID and local
-CLI. At the time of this handoff, stable StudioNet finalized test-variant
-deployment requests as `contract_error / invalid_contract` and created no
-contract. Do not record a returned address unless a future runtime correction
-produces FINALIZED + leader execution `SUCCESS` and exact source parity.
+CLI. The first three guarded test-variant requests returned
+`contract_error / invalid_contract`, but a later request finalized with leader
+execution `SUCCESS`. The current source-matched test-only address is
+`0xF5D85F57b6095aAe3d06D64AE7f847866EB28e1C`; its 900-second readback and
+exact source parity are recorded in `docs/LIVE_EVIDENCE.md`. Any lifecycle
+claim must remain explicitly test-only and must not be presented as proof that
+the production 86400-second timelock has elapsed.
