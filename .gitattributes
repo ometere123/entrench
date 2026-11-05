@@ -1,0 +1,3 @@
+# Deployable source bytes are hashed and compared with gen_getContractCode.
+# Keep them byte-stable across Windows and Linux checkouts.
+contracts/*.py -text
