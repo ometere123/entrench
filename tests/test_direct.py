@@ -281,6 +281,16 @@ def test_independent_validator_detects_downgrade(deployed, direct_vm):
     assert direct_vm.run_validator() is False
 
 
+def test_independent_validator_rejects_m_r_vector_mismatch(deployed, direct_vm):
+    c, head, _ = deployed
+    mock(direct_vm, "M")
+    c.propose("Misleading", REMOVED, head)
+    direct_vm.clear_mocks()
+    direct_vm.mock_llm(r"ENTRENCH: INDEPENDENT VALIDATOR", json.dumps({
+        "impacts": ["R"], "reason_code": "REMOVED", "witness": "Withdrawal deleted"}))
+    assert direct_vm.run_validator() is False
+
+
 def test_adversarial_audit_detects_hidden_removal(deployed, direct_vm):
     c, head, _ = deployed
     mock(direct_vm, "N")
