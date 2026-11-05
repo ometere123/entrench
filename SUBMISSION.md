@@ -12,10 +12,10 @@ uses GenLayer semantic consensus to classify each proposed policy change as
 ordinary, material, removal or unclear. Deterministic on-chain code applies
 the corresponding quorum, timelock and head/version checks; a typed consumer
 proves that an exact executed amendment can unlock a one-shot action. The
-ordinary and consumer paths are finalized on stable StudioNet 61999 with exact
-source byte parity. The live validator set returned `MAJORITY_DISAGREE` for
-the material/removal attempts, so this submission does not claim an unverified
-75%/90% or 24-hour lifecycle.
+ordinary, protected-tier and consumer paths are finalized on stable StudioNet
+61999 with exact source byte parity. The live validator set returned
+`MAJORITY_DISAGREE` for removal attempts, so this submission does not claim an
+unverified 90% or 24-hour lifecycle.
 
 ## Repository
 
@@ -44,6 +44,7 @@ custody or central decision service.
 - The live ordinary amendment, immutable-charter rollback, typed consumer
   success and one-shot replay rollback are recorded in
   [`docs/LIVE_EVIDENCE.md`](docs/LIVE_EVIDENCE.md).
-- Live M/R proposals finalized as `MAJORITY_DISAGREE`; the 75%/90% and
-  public-chain 24-hour timelock lifecycle remains a blocker for a fully
+- A live protected-tier `E` proposal reached 75%, four approvals and execution.
+- Live removal proposals finalized as `MAJORITY_DISAGREE`; the 90% and
+  public-chain 24-hour timelock lifecycle remains the blocker for a fully
   complete submission. This result is not relabeled as success.

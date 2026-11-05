@@ -49,8 +49,12 @@ as a semantic disagreement. Each link is an explorer reference.
 | Ordinary proposal | [`0x30035de1eb1956fce5f49f66bc79e9b0031066b9d12039a6a37db673ee48bab0`](https://explorer-studio.genlayer.com/tx/0x30035de1eb1956fce5f49f66bc79e9b0031066b9d12039a6a37db673ee48bab0) |
 | Ordinary votes A/B/C | [`0x91e5ac56fb637907097b1dabdc3c7b028b6e8de0f3fc9f4e54a310fce87daeec`](https://explorer-studio.genlayer.com/tx/0x91e5ac56fb637907097b1dabdc3c7b028b6e8de0f3fc9f4e54a310fce87daeec), [`0x6be98be69f1321009c4a9bb113b59226f99f69ba85e6482ad81f4bf08b74d1b5`](https://explorer-studio.genlayer.com/tx/0x6be98be69f1321009c4a9bb113b59226f99f69ba85e6482ad81f4bf08b74d1b5), [`0xb053f92b91fd254168a08df10ab5d9c3a105ae0a8420028d00ba88c66db3cd5a`](https://explorer-studio.genlayer.com/tx/0xb053f92b91fd254168a08df10ab5d9c3a105ae0a8420028d00ba88c66db3cd5a) |
 | Ordinary queue / execute | [`0xc932c074c0172a9dd4859bda4433188406cb7a9a6a045bca94c5f1637e3d946c`](https://explorer-studio.genlayer.com/tx/0xc932c074c0172a9dd4859bda4433188406cb7a9a6a045bca94c5f1637e3d946c), [`0xcfb5f519ba5b483013556d6a26def5252f2979190555293ac8c69624efbc2d45`](https://explorer-studio.genlayer.com/tx/0xcfb5f519ba5b483013556d6a26def5252f2979190555293ac8c69624efbc2d45) |
+| Protected-tier expansion proposal | [`0xced78db6ba0fc9af035a82bc37b16447c93c993bd76e04b7df2bec21092e0131`](https://explorer-studio.genlayer.com/tx/0xced78db6ba0fc9af035a82bc37b16447c93c993bd76e04b7df2bec21092e0131), finalized `MAJORITY_AGREE`; readback vector `E`, `PROTECTED`, 75%, required 4 |
+| Protected-tier votes A/B/C/D | [`0x5349355d202fdc1e7782415095a7684edf4332ea7c136a21a85887c5383ae3c9`](https://explorer-studio.genlayer.com/tx/0x5349355d202fdc1e7782415095a7684edf4332ea7c136a21a85887c5383ae3c9), [`0xbcb4464d32f1c50e87dd2c9292a75239dcac5bee01851b9b5926d5d156202a9f`](https://explorer-studio.genlayer.com/tx/0xbcb4464d32f1c50e87dd2c9292a75239dcac5bee01851b9b5926d5d156202a9f), [`0x566a4700a21eec23588cc15e68a9f676e0ddc68f332d1ce7ec74bfcfb0637514`](https://explorer-studio.genlayer.com/tx/0x566a4700a21eec23588cc15e68a9f676e0ddc68f332d1ce7ec74bfcfb0637514), [`0xbc0666c1047f9209c28601c3c29ec3a869879603e513eb921a6c7af6893757e2`](https://explorer-studio.genlayer.com/tx/0xbc0666c1047f9209c28601c3c29ec3a869879603e513eb921a6c7af6893757e2); all FINALIZED, `MAJORITY_AGREE` |
+| Protected-tier queue / execute | [`0xe1f2df7c660d7266ffc7731e49c30ba59dd7e637e8f3332278efc9dbc8ac3c4f`](https://explorer-studio.genlayer.com/tx/0xe1f2df7c660d7266ffc7731e49c30ba59dd7e637e8f3332278efc9dbc8ac3c4f), [`0xaeab8de95bcec71aa30bed1874c2dbe15bbc20a6d88dc791d937b3633c4f0ac6`](https://explorer-studio.genlayer.com/tx/0xaeab8de95bcec71aa30bed1874c2dbe15bbc20a6d88dc791d937b3633c4f0ac6); all FINALIZED, `MAJORITY_AGREE`; new head `1e0ad8c9b76994f88a88b1299fb3ad05c41da6f88e909de0055961b1379ff8a8` |
 | Consumer typed IC-to-IC success | [`0x4d3022ec356c8e7343a485eaf708fc29a2caaef723d30317697603bf30136ce0`](https://explorer-studio.genlayer.com/tx/0x4d3022ec356c8e7343a485eaf708fc29a2caaef723d30317697603bf30136ce0), finalized majority-agree, leader `SUCCESS`; `did_perform == true` |
 | Consumer replay rejected | [`0x5bce7ff5f3e054dd3438f8745ac9dde9f7a304ad887eba675c85980649f36044`](https://explorer-studio.genlayer.com/tx/0x5bce7ff5f3e054dd3438f8745ac9dde9f7a304ad887eba675c85980649f36044), finalized majority-agree, leader rollback `ONE_SHOT`; `did_perform` remained `true` |
+| Superseded-head readback | `is_executed(1, c06345ce8f3f9265346ec773cf870338b9bdb187c5ee1f27b4b8ed71143a7f6c) == false`; `is_executed(2, 1e0ad8c9b76994f88a88b1299fb3ad05c41da6f88e909de0055961b1379ff8a8) == true` |
 
 ## Live semantic-consensus limitation
 
@@ -61,11 +65,15 @@ reached `MAJORITY_DISAGREE`. The observed transactions were:
 - M-tier attempt: [`0xd31bad8f82dc1c80b691ed42b5b52ac355d7ab714fb8b1f70ffe4d29dd7ea727`](https://explorer-studio.genlayer.com/tx/0xd31bad8f82dc1c80b691ed42b5b52ac355d7ab714fb8b1f70ffe4d29dd7ea727)
 - M-tier retry: [`0x76b4f990322a42922ad13e1c9d38961fa6a32242064ea3ef062caa5445ca12c0`](https://explorer-studio.genlayer.com/tx/0x76b4f990322a42922ad13e1c9d38961fa6a32242064ea3ef062caa5445ca12c0)
 - R-tier disguised removal: [`0x0de1ba9e68b131ae3708bcbd4786e5a5d6a272cd5b368bb4a80a9e36029de4b7`](https://explorer-studio.genlayer.com/tx/0x0de1ba9e68b131ae3708bcbd4786e5a5d6a272cd5b368bb4a80a9e36029de4b7)
+- Clear removal against the post-expansion head: [`0xee608ecf0e7229d2680eb82c8b043265c7d0b6e4c9b257ba6b8a2cae2bd5cee0`](https://explorer-studio.genlayer.com/tx/0xee608ecf0e7229d2680eb82c8b043265c7d0b6e4c9b257ba6b8a2cae2bd5cee0)
 
-This is a genuine fail-closed network result, not evidence that the M/R
+This is a genuine fail-closed network result, not evidence that the removal
 classification succeeded. Consequently, this ledger does **not** claim a live
 75% or 90% proposal, a five-vote removal queue, or the 24-hour public-chain
 timelock execution. The exact-tier and boundary behavior is covered by the
 26 stable Direct Mode tests. A final submission should remain BLOCKED until a
-stable 61999 semantic-consensus run produces a genuine M/R result and the
-remaining live gates are independently captured.
+stable 61999 semantic-consensus run produces a genuine R result and the
+remaining live removal gate is independently captured. The 75% protected
+path is now live-verified through the `E` expansion above; only the 90%
+removal classification, five-vote queue and 24-hour execution remain
+unverified because the network has not reached consensus on a removal.

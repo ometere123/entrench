@@ -134,9 +134,9 @@ The primary Entrench deployment is live at
 and the typed consumer at
 [`0xE1D0845B7A07e562C3f623Cb6668933AC14F363c`](https://explorer-studio.genlayer.com/address/0xE1D0845B7A07e562C3f623Cb6668933AC14F363c).
 Both are source-byte matched and finalized on StudioNet 61999. The live
-ordinary and consumer paths are proven, while the live M/R semantic attempts
-reached `MAJORITY_DISAGREE`; therefore the 75%/90% and 24-hour live lifecycle
-remains explicitly unresolved rather than claimed.
+ordinary, protected-tier and consumer paths are proven, while the live removal
+semantic attempts reached `MAJORITY_DISAGREE`; therefore the 90% and 24-hour
+live removal lifecycle remains explicitly unresolved rather than claimed.
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and
 [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for details. Recorded build results

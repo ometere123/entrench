@@ -35,14 +35,17 @@ deployments finalized with `MAJORITY_AGREE` and leader execution `SUCCESS`, and
 both deployed source byte arrays matched the local source hashes. The full
 receipt ledger and lifecycle links are in [`LIVE_EVIDENCE.md`](LIVE_EVIDENCE.md).
 
-The live ordinary amendment and typed consumer path succeeded. A post-seal
+The live ordinary amendment, protected-tier expansion, and typed consumer path
+succeeded. A post-seal
 mutation rolled back as `IMMUTABLE_CHARTER`, and consumer replay rolled back as
 `ONE_SHOT` without changing the one-shot state.
 
-The live M-tier and R-tier attempts finalized as `MAJORITY_DISAGREE`, so no
-material/removal proposal was stored. That outcome is correctly recorded as a
-remaining deployment-verification blocker: this repository does not claim a
-live 75%/90% transition or 24-hour public-chain timelock execution.
+The live protected-tier expansion finalized as `E`/75%, received four member
+votes, queued and executed, and advanced the canonical head. Multiple live
+M/R attempts, including a clear removal after that head, finalized as
+`MAJORITY_DISAGREE`, so no removal proposal was stored. The repository now
+claims the live 75% protected path but not a live 90% transition or 24-hour
+public-chain timelock execution.
 
 ## CI
 
