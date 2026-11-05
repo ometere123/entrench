@@ -16,18 +16,18 @@ chain RPC.
 | Stable Direct Mode bundle | `v0.2.12` |
 | Deployable source commit | `c806390a342b81f06dfa18ff71c2478fc9579df0` (later documentation-only commits do not change either contract) |
 
-## Finalized deployments and exact source parity
+## Finalized corrected deployments and exact source parity
 
 | Contract | Address | Deployment transaction | Receipt |
 | --- | --- | --- | --- |
-| Entrench | [`0xE545b98d1c1Fce30421b64E55D71159984f7fd8d`](https://explorer-studio.genlayer.com/address/0xE545b98d1c1Fce30421b64E55D71159984f7fd8d) | [`0x1d3d1692d227b8cad3bc35e9e7cefc25d0f332f5392ea72e55c4e04d72c06703`](https://explorer-studio.genlayer.com/tx/0x1d3d1692d227b8cad3bc35e9e7cefc25d0f332f5392ea72e55c4e04d72c06703) | FINALIZED, `MAJORITY_AGREE`, leader execution `SUCCESS` |
-| ConstitutionalActionGate | [`0xE1D0845B7A07e562C3f623Cb6668933AC14F363c`](https://explorer-studio.genlayer.com/address/0xE1D0845B7A07e562C3f623Cb6668933AC14F363c) | [`0x2060e239f115bd023200edf69705e7349a55b699460b184bda8de11ffe3dd86a`](https://explorer-studio.genlayer.com/tx/0x2060e239f115bd023200edf69705e7349a55b699460b184bda8de11ffe3dd86a) | FINALIZED, `MAJORITY_AGREE`, leader execution `SUCCESS` |
+| Entrench | [`0x0fd3823b7f08F73275AABf60e88bEc9A1c507314`](https://explorer-studio.genlayer.com/address/0x0fd3823b7f08F73275AABf60e88bEc9A1c507314) | [`0x5f91ffd0e8ff6854b2d03c12ece6f426e08b45821c4e07dff5d4879d5bb458da`](https://explorer-studio.genlayer.com/tx/0x5f91ffd0e8ff6854b2d03c12ece6f426e08b45821c4e07dff5d4879d5bb458da) | FINALIZED, `MAJORITY_AGREE`, leader execution `SUCCESS` |
+| ConstitutionalActionGate | [`0x4a51a85C33604B9B7F1C9347bF944853fE8F632f`](https://explorer-studio.genlayer.com/address/0x4a51a85C33604B9B7F1C9347bF944853fE8F632f) | [`0x84682211416ec86309796c82a1ec57b7eb6b0736a4627614113222d1af2b359d`](https://explorer-studio.genlayer.com/tx/0x84682211416ec86309796c82a1ec57b7eb6b0736a4627614113222d1af2b359d) | FINALIZED, `MAJORITY_AGREE`, leader execution `SUCCESS` |
 
 The deployed code was fetched with `gen_getContractCode` and compared byte for
 byte:
 
 ```text
-Entrench: a22ce1480c9dbc4c0263c48e4c835448a25dd303208eb5aa6bb0f2ea2b9db256
+Entrench: 4f504b32ff3246db0c72382dbeec2c93070caac6018cd7d861f93fa6235c8899
 Consumer: 29024997d1331874cb44e5d3db7b3dc689fcbfcfb761a9543a8c76dd42c7396a
 ```
 
