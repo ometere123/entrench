@@ -42,7 +42,7 @@ custody or central decision service.
 - 22/22 offline tests and 27/27 stable GenVM Direct Mode tests pass.
 - GenVM lint, validation and schema checks pass for production, consumer and
   the isolated 900-second source.
-- GitHub Actions is green for source/test-variant commit `c806390a342b81f06dfa18ff71c2478fc9579df0`: [`run 42080046282`](https://github.com/ometere123/entrench/actions/runs/42080046282), and for the latest evidence commit `69eca618cca47a0414e1c0db961825c1b42a9562`: [`run 42086674678`](https://github.com/ometere123/entrench/actions/runs/42086674678).
+- GitHub Actions is green for source/test-variant commit `c806390a342b81f06dfa18ff71c2478fc9579df0`: [`run 42080046282`](https://github.com/ometere123/entrench/actions/runs/42080046282), and for the final evidence commit `d0af34d169b686d2ddd16f9e49212d3065e4349b`: [`run 42109276609`](https://github.com/ometere123/entrench/actions/runs/42109276609).
 - Deployed source bytes match the final contract hashes in
   `SOURCE_SHA256_MANIFEST.json`.
 - The live ordinary amendment, immutable-charter rollback, typed consumer
