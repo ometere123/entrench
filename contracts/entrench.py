@@ -28,6 +28,11 @@ def _json(data):
     return json.dumps(data, sort_keys=True, separators=(",", ":"), ensure_ascii=True)
 
 
+def _prompt_data(data):
+    """Encode hostile proposal text without creating prompt delimiters."""
+    return (_json(data).replace("<", "\\u003c").replace(">", "\\u003e"))
+
+
 def _hash(data):
     return Keccak256(data.encode("utf-8")).hexdigest()
 
@@ -99,10 +104,10 @@ U: ambiguity, unresolved contradiction or insufficient clarity.
 Never classify removal as mere modification; never net away adverse effects.
 Inspect exceptions, hidden permissions, definitions, deadlines, changed authority,
 delegation, procedural hurdles, remedies and renamed rights.
-PURPOSE<<<{purpose}>>>END
-FROZEN PRINCIPLES [index,tag,meaning]<<<{_json(rules)}>>>END
-CURRENT CANONICAL POLICY<<<{old}>>>END
-PROPOSED REPLACEMENT POLICY<<<{new}>>>END
+  PURPOSE<<<{_prompt_data(purpose)}>>>END
+  FROZEN PRINCIPLES [index,tag,meaning]<<<{_prompt_data(rules)}>>>END
+  CURRENT CANONICAL POLICY<<<{_prompt_data(old)}>>>END
+  PROPOSED REPLACEMENT POLICY<<<{_prompt_data(new)}>>>END
 JSON only, exactly:
 {{"impacts":["N" or "M" or "R" or "E" or "U" for each of {len(rules)} principles
 in order],"reason_code":"ASCII_CODE","witness":"specific short old/new effect
@@ -115,10 +120,10 @@ def _audit_prompt(purpose, old, new, rules, vector):
 Search for false N decisions (hidden touches), and M/E decisions that should
 be R (removals, disabled safeguards, silent loopholes). Look for deleted rights,
 exceptions, relaxed approvals, new powers, and indirect contradictions.
-PURPOSE<<<{purpose}>>>END
-RULES<<<{_json(rules)}>>>END
-OLD<<<{old}>>>END
-NEW<<<{new}>>>END
+  PURPOSE<<<{_prompt_data(purpose)}>>>END
+  RULES<<<{_prompt_data(rules)}>>>END
+  OLD<<<{_prompt_data(old)}>>>END
+  NEW<<<{_prompt_data(new)}>>>END
 PROPOSED_VECTOR<<<{vector}>>>END
 Return JSON exactly: {{"misclassified_indices":[unique indices where
 classification UNDERSTATES material effect],"uncertain":false}}.

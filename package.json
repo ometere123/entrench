@@ -4,7 +4,7 @@
   "private": true,
   "description": "Frontend-free constitutional amendment threshold primitive for stable StudioNet 61999",
   "scripts": {
-    "cli": "genlayer",
+    "cli": "node scripts/local-cli.cjs",
     "network:check": "node scripts/network-guard.cjs",
     "preflight": "python3 scripts/preflight.py",
     "test:offline": "python3 -m unittest discover -s tests -p test_offline.py -v",

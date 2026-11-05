@@ -24,6 +24,8 @@
 | Global rc CLI uses different protocol | Node dependency is locked to local CLI 0.39.1 |
 | Consumer assumes ACCEPTED is final | Deployment runbook requires FINALIZED and execution success |
 | Large prompt or on-chain history abuse | Bounded policy/rules; one live proposal per member per head |
+| Policy text creates a fake prompt boundary | Prompt payloads are JSON-encoded and `<`/`>` are escaped before insertion; validators receive the same frozen texts |
+| Consumer front-run of `perform()` | Deliberately accepted as permissionless because the gate is non-value-bearing; callers needing ownership must wrap it with their own authorization |
 
 ## Honest guarantees
 
@@ -42,3 +44,8 @@ threshold impossible. This is a constitutional tradeoff, not a hidden override.
 The initial policy can itself contain contradictory language. Users should
 review and sign the exact genesis hash before sealing. Smart-contract validity
 does not substitute for external legal advice.
+
+The pinned Direct Mode harness confirms that the stable runner's transaction
+clock is used by `datetime.now(timezone.utc)`: the removal gate rejects at
+`available_at - 1` and accepts at exactly `available_at`. This is a Direct Mode
+runtime check, not a claim that a public-chain timelock has elapsed.

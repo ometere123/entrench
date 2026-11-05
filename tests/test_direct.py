@@ -1,5 +1,6 @@
 """GenVM Direct Mode on pinned v0.2.12 (not a Python imitation)."""
 import json
+from datetime import datetime, timezone
 import pytest
 
 BASE = ("Members may withdraw their vested treasury shares after 7 days. "
@@ -122,6 +123,75 @@ def test_removed_right_queue_has_real_timelock(deployed, direct_vm):
     assert not c.can_execute(pid)
     with direct_vm.expect_revert("TIMELOCK_ACTIVE"):
         c.execute(pid)
+
+
+def test_removal_timelock_has_exact_timestamp_boundaries(deployed, direct_vm):
+    c, head, voters = deployed
+    mock(direct_vm, "R")
+    pid = c.propose("Administrative Liquidity Improvement", REMOVED, head)
+    vote_n(direct_vm, c, pid, voters, 5)
+    available = c.queue(pid)
+
+    def iso(seconds):
+        return datetime.fromtimestamp(seconds, timezone.utc).isoformat().replace(
+            "+00:00", "Z")
+
+    direct_vm.warp(iso(available - 1))
+    assert not c.can_execute(pid)
+    with direct_vm.expect_revert("TIMELOCK_ACTIVE"):
+        c.execute(pid)
+
+    direct_vm.warp(iso(available))
+    assert c.can_execute(pid)
+    fresh = c.execute(pid)
+    assert c.is_executed(pid, fresh)
+
+
+@pytest.mark.parametrize("leader", [
+    {"impacts": ["N"], "reason_code": "OK", "witness": "", "extra": True},
+    {"impacts": "N", "reason_code": "OK", "witness": ""},
+    {"impacts": [1], "reason_code": "OK", "witness": ""},
+    {"impacts": ["R"], "reason_code": "OK", "witness": "x" * 301},
+])
+def test_malformed_leader_output_fails_closed(deployed, direct_vm, leader):
+    c, head, _ = deployed
+    direct_vm.clear_mocks()
+    direct_vm.mock_llm(r"ENTRENCH: LEADER", json.dumps(leader))
+    direct_vm.mock_llm(r"ENTRENCH: INDEPENDENT VALIDATOR", json.dumps({
+        "impacts": ["N"], "reason_code": "VALID", "witness": ""}))
+    direct_vm.mock_llm(r"ENTRENCH ADVERSARIAL AUDIT", json.dumps({
+        "misclassified_indices": [], "uncertain": False}))
+    pid = c.propose("Malformed result", MODIFIED, head)
+    assert c.get_proposal(pid)["status"] == 2
+    with direct_vm.expect_revert("NOT_LIVE_OR_STALE"):
+        c.vote(pid, True)
+    with direct_vm.expect_revert("NOT_LIVE_OR_STALE"):
+        c.queue(pid)
+
+
+def test_multi_principle_vector_uses_removal_precedence(
+        direct_vm, direct_deploy, direct_alice, direct_bob, direct_charlie,
+        direct_accounts):
+    david, erin = direct_accounts[3], direct_accounts[4]
+    direct_vm.sender = direct_alice
+    c = direct_deploy("contracts/entrench.py", sdk_version="v0.2.12")
+    from genlayer.py.types import Address
+    c.set_genesis("Treasury and appeal governance", BASE)
+    c.add_principle("WITHDRAWAL", RULE)
+    c.add_principle("APPEAL", "A minority appeal route must remain available.")
+    for who in (direct_bob, direct_charlie, david, erin):
+        c.add_member(Address(who))
+    for who in (direct_alice, direct_bob, direct_charlie, david, erin):
+        direct_vm.sender = who
+        c.attest_charter()
+    direct_vm.sender = direct_alice
+    head = c.seal_charter()
+    mock(direct_vm, "NR")
+    pid = c.propose("Appeal cleanup", MODIFIED, head)
+    info = c.get_proposal(pid)
+    assert info["vector"] == "NR"
+    assert info["threshold_class"] == "REMOVAL"
+    assert info["required_yes"] == 5
 
 
 def test_ambiguity_is_terminal_block(deployed, direct_vm):

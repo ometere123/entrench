@@ -1,5 +1,13 @@
 # { "Depends": "py-genlayer:1jb45aa8ynh2a9c9xn3b7qqh8sm5q93hwfp7jqmwsfhh8jpz09h6" }
-"""Small independent consumer proving that stale constitutional heads are unusable."""
+"""Permissionless one-shot consumer proving a head-bound amendment is canonical.
+
+This gate deliberately has no requester-specific authorization: it has no value,
+does not represent a user's entitlement, and is intended as a public trigger for
+an already-authorized constitutional state. A caller can therefore front-run the
+one-shot trigger, but cannot redirect the registry, proposal, or expected head.
+Applications that need a requester-owned action should wrap this primitive with
+their own caller-bound authorization rather than treating ``perform`` as one.
+"""
 from genlayer import *
 
 

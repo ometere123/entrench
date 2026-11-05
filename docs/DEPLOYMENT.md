@@ -15,20 +15,24 @@ python3 -m venv .venv
 .venv/bin/python -m unittest discover -s tests -p test_offline.py -v
 .venv/bin/python -m pytest tests/test_direct.py -v
 npm run network:check
-npm exec -- genlayer --version
-npm exec -- genlayer network set studionet
-npm exec -- genlayer network info
+npm run cli -- --version
+npm run cli -- network set studionet
+npm run cli -- network info
 ```
 
-The project uses `node_modules/.bin/genlayer` via npm; never install a
-global CLI over your existing release candidate. The network guard reads
-the actual chain ID from the stable RPC before any broadcast.
+The project uses the repository-local `node_modules/.bin/genlayer` executable
+(or `scripts/local-cli.cjs`, which resolves the same package directly); never
+install or invoke a global CLI. The network guard reads the actual chain ID
+from the stable RPC before any broadcast. A local install is invalid if
+`node_modules/.bin/genlayer.cmd --version` is not exactly `0.39.1`.
 
 The pinned Direct Mode tests use `sdk_version="v0.2.12"` to avoid
 accidentally using a later GenVM artifact. On native Windows, an older
 `genlayer-test==0.29.2` file-descriptor unlink issue may require a
 compatibility shim; running tests in Linux CI avoids that platform-specific
-loader behavior. Do not bypass tests because of a missing GenVM artifact.
+loader behavior. The checked-in shim is test infrastructure only and is not
+imported by deployed contracts. Do not bypass tests because of a missing GenVM
+artifact.
 
 ## Deployment
 
@@ -37,6 +41,13 @@ Keep passwords/private keys entirely outside Git and the review report.
 
 ```bash
 ENTRENCH_DEPLOY_ACK=61999 npm run deploy:core
+```
+
+On Windows PowerShell, use the native guarded wrapper:
+
+```powershell
+$env:ENTRENCH_DEPLOY_ACK = '61999'
+.\scripts\deploy.ps1 -Contract contracts/entrench.py
 ```
 
 Record actual address, hash, validator votes, execution success and finality.
@@ -52,6 +63,11 @@ ENTRENCH_DEPLOY_ACK=61999 npm run deploy:consumer
 
 CLI may ask interactively for constructor args and account password. Confirm
 it is asking for the intended values; never invent successful confirmation.
+
+The independent consumer is intentionally permissionless and non-value-bearing:
+any caller may trigger its one-shot action once the exact amendment/head pair is
+canonical. It is not a requester-owned entitlement. Applications that need
+requester authorization must add that authorization in their own wrapper.
 
 ## Source parity
 

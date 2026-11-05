@@ -28,7 +28,8 @@ Semantic classification is performed inside GenLayer's Equivalence Principle.
 The proposer cannot supply an authoritative impact class. The leader returns a
 bounded vector for every protected principle; validators independently classify
 the same frozen old policy, proposed replacement and principles, then perform a
-separate adversarial search for false negatives and covert removals. Code,
+separate adversarial search for false negatives and covert removals. Policy text
+is JSON-encoded as escaped untrusted data before prompt insertion. Code,
 not the model, computes votes, delays, status and version transitions.
 
 ## Demo in one minute
@@ -48,12 +49,12 @@ The complete reproducible sequence is in [docs/REVIEWER_DEMO.md](docs/REVIEWER_D
 
 - `contracts/entrench.py` — full constitutional registry, consensus gate,
   immutable membership, voting, queue, timelock, versioned policy head.
-- `contracts/consumer_gate.py` — one-shot head-bound independent IC consumer.
+- `contracts/consumer_gate.py` — permissionless, non-value-bearing one-shot head-bound IC consumer.
 - `tests/test_offline.py` — pure invariant and adversarial payload checks.
 - `tests/test_direct.py` — genuine GenVM Direct Mode test scenarios.
 - `scripts/network-guard.cjs` — exact production RPC chain ID and local CLI check.
 - `scripts/preflight.py` — non-deploying source and configuration verification.
-- `scripts/deploy.sh` — deliberately explicit production deploy wrapper.
+- `scripts/deploy.sh` / `scripts/deploy.ps1` — deliberately explicit production deploy wrappers.
 - `.github/workflows/ci.yml` — reproducible pinned Node/Python checks.
 - `docs/SECURITY.md` — assumptions, failure modes and mitigations.
 
@@ -92,8 +93,10 @@ The last command performs a **read-only** production RPC check. It must
 return chain ID 61999; an unreachable RPC is a **failure**, not permission
 to switch networks.
 
-On Windows, use the corresponding `.venv\\Scripts\\python.exe` and
-see the pinned test-runner compatibility note in the deployment guide.
+On Windows, use the corresponding `.venv\\Scripts\\python.exe` and see the
+pinned test-runner compatibility note in the deployment guide. The checked-in
+`tests/conftest.py` only repairs the Windows temporary-file cleanup defect in
+`genlayer-test==0.29.2`; it does not alter contract execution.
 
 ## Production deployment
 
@@ -109,6 +112,10 @@ successful** transaction receipts, deployed addresses, code/source parity and
 subsequent lifecycle evidence. The consumer constructor needs the actual core
 address, proposal ID and canonical execution head.
 
+On Windows PowerShell, use `scripts/deploy.ps1 -Contract
+contracts/entrench.py` (or `consumer_gate.py`) after setting
+`$env:ENTRENCH_DEPLOY_ACK = '61999'`.
+
 ## Deliberate boundaries
 
 - A consensus outcome is a protocol decision, not a mathematical proof that
@@ -123,5 +130,5 @@ address, proposal ID and canonical execution head.
 
 See [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) and
 [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for details. Recorded build results
-(19 offline tests, 20 genuine Direct Mode tests, both semantic validations
+(20 offline tests, 26 genuine Direct Mode tests, both semantic validations
 passed) are in [docs/VERIFICATION.md](docs/VERIFICATION.md).

@@ -1,0 +1,11 @@
+{
+  "algorithm": "SHA-256",
+  "files": {
+    "contracts/consumer_gate.py": {
+      "sha256": "29024997d1331874cb44e5d3db7b3dc689fcbfcfb761a9543a8c76dd42c7396a"
+    },
+    "contracts/entrench.py": {
+      "sha256": "a22ce1480c9dbc4c0263c48e4c835448a25dd303208eb5aa6bb0f2ea2b9db256"
+    }
+  }
+}

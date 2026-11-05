@@ -51,6 +51,9 @@ Before the referenced amendment is executed, `perform()` fails. After a
 genuine FINALIZED successful execution at the expected **current** head,
 `perform()` succeeds once. A second `perform()` fails with `ONE_SHOT`.
 If another amendment changes the current head first, the stale consumer fails.
+The consumer is intentionally permissionless: it is a non-value-bearing public
+trigger, not a requester-specific entitlement. A requester-owned action must
+perform its own caller check before or around this gate.
 
 ## D. Adversarial validation
 
@@ -59,7 +62,7 @@ Direct Mode tests simulate:
 - leader claims N while independent validator finds R — validator rejects;
 - leader and verifier agree N, independent adversarial audit detects a hidden
   removal — validator rejects;
-- U and malformed responses — fail closed;
+- U and malformed responses — fail closed as blocked proposals;
 - injections in the proposal text and misleading proposal titles — never
   parameterize the deterministic threshold.
 
