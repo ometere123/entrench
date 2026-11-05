@@ -55,8 +55,8 @@ no fabricated 900-second live lifecycle.
 The removal-first correction passed GitHub Actions on source commit
 `25b9ca8b563bce9689117567cdf6832902fc43da`:
 [`run 42063888925`](https://github.com/ometere123/entrench/actions/runs/42063888925).
-The final documentation/test-variant commit requires the new run recorded in
-the handoff before submission.
+The final documentation/test-variant commit `c806390a342b81f06dfa18ff71c2478fc9579df0`
+also passed: [`run 42080046282`](https://github.com/ometere123/entrench/actions/runs/42080046282).
 The previous run failed at the preflight hash check because Windows CRLF bytes
 were not preserved in the Git blob; `.gitattributes` and the committed source
 blob now make the parity check deterministic across Windows and Linux.
