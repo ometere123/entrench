@@ -6,19 +6,7 @@ Entrench: Constitutional Amendment Governance Guard
 
 ## Description
 
-Entrench is a reusable, contract-only GenLayer primitive for constitutional
-governance. It freezes a charter, member roster and protected principles, then
-uses GenLayer semantic consensus to classify each proposed policy change as
-ordinary, material, removal or unclear. Deterministic on-chain code applies
-the corresponding quorum, timelock and head/version checks; a typed consumer
-proves that an exact executed amendment can unlock a one-shot action. The
-ordinary, protected-tier, removal-classification, timelock-gate and consumer
-paths are finalized on stable StudioNet 61999 with exact source byte parity.
-The production removal was queued with `available_at = queue_time + 86400` and
-rejected early with `TIMELOCK_ACTIVE`; it was canceled rather than waiting 24
-hours. A separate source-matched 900-second test deployment completed the
-shortened integration lifecycle; it is explicitly test-only and does not prove
-that the canonical 24-hour timelock elapsed.
+Entrench is a standalone GenLayer constitutional governance guard. It freezes a charter, voting roster and protected principles, then uses independent semantic consensus to classify policy changes by their real effect—not their titles. Deterministic enforcement requires 51% approval for ordinary changes, 75% for protected modifications or expansions, and 90% plus a 24-hour timelock for removal. Ambiguous classifications fail closed. On stable StudioNet 61999, live transactions prove removal classification, five-wallet approval, queueing, early timelock rejection, ordinary and protected amendment execution, and a typed one-shot consumer with replay protection. A separate 900-second test-only deployment proves post-deadline removal execution; the production 24-hour wait was not completed. Source integrity, Direct Mode and CI are verified.
 
 ## Repository
 
@@ -42,7 +30,7 @@ custody or central decision service.
 - 22/22 offline tests and 27/27 stable GenVM Direct Mode tests pass.
 - GenVM lint, validation and schema checks pass for production, consumer and
   the isolated 900-second source.
-- GitHub Actions is green for source/test-variant commit `c806390a342b81f06dfa18ff71c2478fc9579df0`: [`run 42080046282`](https://github.com/ometere123/entrench/actions/runs/42080046282), and for the final evidence commit `ace15762f8cc497f69e2f4fc4dc5bf0845fde2a4`: [`run 42110683396`](https://github.com/ometere123/entrench/actions/runs/42110683396).
+- GitHub Actions is green for source/test-variant commit `c806390a342b81f06dfa18ff71c2478fc9579df0`: [`run 42080046282`](https://github.com/ometere123/entrench/actions/runs/42080046282), and for final commit `73888ad3f9e75bf1faaffa5868c67b4db7b5aee0`: [`run 42111182791`](https://github.com/ometere123/entrench/actions/runs/42111182791).
 - Deployed source bytes match the final contract hashes in
   `SOURCE_SHA256_MANIFEST.json`.
 - The live ordinary amendment, immutable-charter rollback, typed consumer
