@@ -48,8 +48,9 @@ rejected immediate execution with `TIMELOCK_ACTIVE`. It was canceled afterward,
 so the full production 24-hour wait was not claimed. The shortened test-only
 source passed local lint/validation/schema and the latest stable deployment
 finalized successfully at `0xF5D85F57b6095aAe3d06D64AE7f847866EB28e1C` with
-exact source parity. Its five-wallet 900-second lifecycle remains pending
-access to the encrypted funded signer accounts and is not claimed as complete.
+exact source parity. Its five-wallet 900-second lifecycle then finalized with
+an exact `queue_time + 900` deadline, early `TIMELOCK_ACTIVE` rejection and
+post-deadline execution; it remains explicitly test-only.
 
 ## CI
 

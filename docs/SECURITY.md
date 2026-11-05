@@ -57,6 +57,7 @@ The corrected production ordinary path, genuine `R` classification, five-wallet
 threshold gate, 86400-second queue timestamp, early timelock rejection, and
 typed consumer were finalized on StudioNet and source-byte matched. The live
 production removal was canceled after the early rejection, so the full 24-hour
-wait is not claimed. The isolated 900-second source passes local checks and its
-latest stable deployment is source-matched; its shortened lifecycle remains an
-explicitly separate integration test and is not production evidence.
+wait is not claimed. The isolated 900-second source passes local checks, its
+latest stable deployment is source-matched, and its shortened lifecycle is
+independently recorded as a separate integration test; it is not production
+evidence.

@@ -90,5 +90,8 @@ readbacks, and the exact live M/R disagreements. The production removal was
 canceled after the early rejection, so the full 24-hour wait is not claimed.
 The isolated 900-second source is test-only; its latest deployment is
 source-matched at `0xF5D85F57b6095aAe3d06D64AE7f847866EB28e1C`, but no
-shortened lifecycle is presented as complete until the five-wallet
-transactions are finalized and independently read back.
+shortened lifecycle is presented as a separate completed integration test: the
+five-wallet removal reached `R`, rejected four approvals, queued at exactly
+`queue_time + 900`, rejected premature execution, and executed after the
+deadline. This is not evidence that the canonical production 86400-second
+timelock elapsed.

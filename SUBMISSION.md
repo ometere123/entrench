@@ -16,9 +16,9 @@ ordinary, protected-tier, removal-classification, timelock-gate and consumer
 paths are finalized on stable StudioNet 61999 with exact source byte parity.
 The production removal was queued with `available_at = queue_time + 86400` and
 rejected early with `TIMELOCK_ACTIVE`; it was canceled rather than waiting 24
-hours. A separate source-matched 900-second test deployment exists solely for
-the shortened integration lifecycle; it is not production evidence and does
-not prove that the canonical 24-hour timelock elapsed.
+hours. A separate source-matched 900-second test deployment completed the
+shortened integration lifecycle; it is explicitly test-only and does not prove
+that the canonical 24-hour timelock elapsed.
 
 ## Repository
 
@@ -52,5 +52,6 @@ custody or central decision service.
 - The corrected live removal reached `R`/90%, rejected four approvals, queued
   with the exact 86400-second delay and rejected premature execution. The
   latest test-only deployment is source-matched at
-  `0xF5D85F57b6095aAe3d06D64AE7f847866EB28e1C`; its five-wallet lifecycle is
-  still pending signer access and is not claimed here as completed.
+  `0xF5D85F57b6095aAe3d06D64AE7f847866EB28e1C`; its five-wallet 900-second
+  lifecycle finalized successfully and is explicitly separated from production
+  evidence.

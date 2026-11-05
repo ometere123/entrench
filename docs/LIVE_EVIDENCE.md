@@ -174,7 +174,41 @@ charter. The successful test-only deployment receipts are:
 | `0x075D03Aecc9fB329183e0a49b431b33EE34A610D` | [`0xd005b9eece5ffc2cae189a3252c5444b9ff930404ef18a5ac02bdd9449a8b8fc`](https://explorer-studio.genlayer.com/tx/0xd005b9eece5ffc2cae189a3252c5444b9ff930404ef18a5ac02bdd9449a8b8fc) | 2026-11-05T17:35:49Z | FINALIZED, `MAJORITY_AGREE`, leader `SUCCESS` |
 | `0xF5D85F57b6095aAe3d06D64AE7f847866EB28e1C` | [`0xfbbe67b015c78b9439508d50e29787c0fb47dba6c60f31ba1f0bd5ecfe313c36`](https://explorer-studio.genlayer.com/tx/0xfbbe67b015c78b9439508d50e29787c0fb47dba6c60f31ba1f0bd5ecfe313c36) | 2026-11-05T17:40:07Z | FINALIZED, `MAJORITY_AGREE`, leader `SUCCESS` |
 
-The five-wallet 900-second lifecycle is pending access to the encrypted
-funded signer accounts. This is an operational evidence gap, not a contract
-security bypass. It is not production evidence and cannot establish that the
-canonical 86400-second production timelock has elapsed.
+The complete test-only 900-second lifecycle was then finalized on the latest
+address. It used five distinct signers (the original participant keystores did
+not share the owner password, so four disposable replacement accounts were
+created and funded from the owner; no production contract or source changed):
+
+| Role | Signer address |
+| --- | --- |
+| Owner / A | `0x0d5540e0aD4B92Aa0ad4e5F1b8cD645ee1E363E7` |
+| B | `0x0403F5D997Efe034581d917FBA48237fE13453F8` |
+| C | `0x3013e3C5cC568d76DE2727514985Da2bf077663f` |
+| D | `0x7107772C1bEE3530a35184fFBEB0E0e880e71Ca1` |
+| E | `0xd942A3188218eDed2b5c16dd6c733A65BA5F487f` |
+
+The owner initialized the charter with [`0x1fc6b84e0c24d37f4d7395f44b980f1914828605d9aa41d558a052ec5d75498c`](https://explorer-studio.genlayer.com/tx/0x1fc6b84e0c24d37f4d7395f44b980f1914828605d9aa41d558a052ec5d75498c) at `2026-11-05T19:59:12Z`, added the protected principle with [`0xa84b4fe544843f41f3855905673a6d79f0dd3b26ba4863593d1c2c0dcf775c7f`](https://explorer-studio.genlayer.com/tx/0xa84b4fe544843f41f3855905673a6d79f0dd3b26ba4863593d1c2c0dcf775c7f), and registered B–E with [`0x3a60d1d8928812b1cc8c4037768a35ab330b9fd85aaafcd73d068db876a584ef`](https://explorer-studio.genlayer.com/tx/0x3a60d1d8928812b1cc8c4037768a35ab330b9fd85aaafcd73d068db876a584ef), [`0xf0d7a982f7e391c9a29a8c57b8391852e5713d2e1fe005185025151b7736d032`](https://explorer-studio.genlayer.com/tx/0xf0d7a982f7e391c9a29a8c57b8391852e5713d2e1fe005185025151b7736d032), [`0x5c5703ad64134056bd0a54ce1e5ce018cbf78b26bd75e4dced85b65e5dc9cb9c`](https://explorer-studio.genlayer.com/tx/0x5c5703ad64134056bd0a54ce1e5ce018cbf78b26bd75e4dced85b65e5dc9cb9c) and [`0xc6875b897a2c2224960b049296721b59575f67557fd4d4a5ec352c267b77a223`](https://explorer-studio.genlayer.com/tx/0xc6875b897a2c2224960b049296721b59575f67557fd4d4a5ec352c267b77a223). Each transaction finalized with `MAJORITY_AGREE` and leader `SUCCESS`.
+
+All five signers independently attested the final revision:
+
+| Signer | Attestation transaction | Created (UTC) |
+| --- | --- | --- |
+| A | [`0x54b318f8ce126a0891f55250a7c18cd81338be503c3c81d962fc35e76d8b2a21`](https://explorer-studio.genlayer.com/tx/0x54b318f8ce126a0891f55250a7c18cd81338be503c3c81d962fc35e76d8b2a21) | 2026-11-05T20:12:49Z |
+| B | [`0xa30f694ac5b181e3fa711ce57ec1496146fcdb3c7c4c28bb6269a8d3e8bf0f5d`](https://explorer-studio.genlayer.com/tx/0xa30f694ac5b181e3fa711ce57ec1496146fcdb3c7c4c28bb6269a8d3e8bf0f5d) | 2026-11-05T20:12:53Z |
+| C | [`0xfca0a00b01c0e99b2925474f6b04962eb3df00e0bb1a5b7513ec3db285602588`](https://explorer-studio.genlayer.com/tx/0xfca0a00b01c0e99b2925474f6b04962eb3df00e0bb1a5b7513ec3db285602588) | 2026-11-05T20:12:57Z |
+| D | [`0x5a2ccf36d960afbfb2298fb4644544aa42cad27a4ce1c8785bba652c8f82a823`](https://explorer-studio.genlayer.com/tx/0x5a2ccf36d960afbfb2298fb4644544aa42cad27a4ce1c8785bba652c8f82a823) | 2026-11-05T20:13:02Z |
+| E | [`0x93977255b8c3e6db3314329615371f98213ef8d785d777e2b3dbefce992ad893`](https://explorer-studio.genlayer.com/tx/0x93977255b8c3e6db3314329615371f98213ef8d785d777e2b3dbefce992ad893) | 2026-11-05T20:13:07Z |
+
+The charter was sealed by [`0xc0533734e983635d3ab8e44cae7ce3d522d8fc287ab37f1fdbe9054f9c47ba49`](https://explorer-studio.genlayer.com/tx/0xc0533734e983635d3ab8e44cae7ce3d522d8fc287ab37f1fdbe9054f9c47ba49) at `2026-11-05T20:15:10Z`. Readback: five members, thresholds `[51,75,90]`, `removal_delay_seconds = 900`, sealed `true`, and frozen head `131239bd2294e358d9079577ef57624846ab403ad4934ed65b47e5f92d819821`.
+
+The genuine removal proposal was [`0xaa5b0a9a95ac9f3db4f69b328137e1db1c29aebf13096ac891bd50fef39135f0`](https://explorer-studio.genlayer.com/tx/0xaa5b0a9a95ac9f3db4f69b328137e1db1c29aebf13096ac891bd50fef39135f0), finalized at `2026-11-05T20:16:21Z` with `MAJORITY_AGREE`, leader `SUCCESS`, three agree / two disagree votes. Canonical readback classified it as vector `R`, `REMOVAL`, `90%`, `required_yes = 5`, exact base head, and witness text grounded in the withdrawal-right removal.
+
+Four approvals finalized in [`0xe87092a046f0e538bc20a00d9462f403eac4f0642e296df3e1b6003d7de56c37`](https://explorer-studio.genlayer.com/tx/0xe87092a046f0e538bc20a00d9462f403eac4f0642e296df3e1b6003d7de56c37), [`0x754a610ef3fef53f825c17d1ad1fbb805cfcc4a5d4ddeaebfc1b7f508bd842a4`](https://explorer-studio.genlayer.com/tx/0x754a610ef3fef53f825c17d1ad1fbb805cfcc4a5d4ddeaebfc1b7f508bd842a4), [`0xb8a0d30566a41511eaf89a038fc0d909a03dd4d91355cabfd891df0eb20af599`](https://explorer-studio.genlayer.com/tx/0xb8a0d30566a41511eaf89a038fc0d909a03dd4d91355cabfd891df0eb20af599) and [`0xb1dbc867592de4c78accb4e5c20a3cacec8a5dc531bfefcae6cef729cd784925`](https://explorer-studio.genlayer.com/tx/0xb1dbc867592de4c78accb4e5c20a3cacec8a5dc531bfefcae6cef729cd784925). The four-approval queue attempt [`0x5827f09198fed260b6e3e57033fcc2b3e62b7c1e4ab11d0afd18d22c7a44c22a`](https://explorer-studio.genlayer.com/tx/0x5827f09198fed260b6e3e57033fcc2b3e62b7c1e4ab11d0afd18d22c7a44c22a) finalized consensus but rolled back with `INSUFFICIENT_APPROVALS`; readback showed `yes_count = 4`, `yes_mask = 15`, and no queue mutation.
+
+The fifth approval [`0x00c2b6424204250546ddba6e26f447c666ac184a09f650603814b1475d30efc8`](https://explorer-studio.genlayer.com/tx/0x00c2b6424204250546ddba6e26f447c666ac184a09f650603814b1475d30efc8) finalized successfully. Queue [`0x4352cc7b2bee54d9ea33892a605aa5f60c8c83f1f0fe84c4717fa64431283ce5`](https://explorer-studio.genlayer.com/tx/0x4352cc7b2bee54d9ea33892a605aa5f60c8c83f1f0fe84c4717fa64431283ce5) finalized at `2026-11-05T20:22:00Z` / epoch `1793910120`; readback showed `yes_count = 5`, `yes_mask = 31`, `available_at = 1793911020`, exactly `queue_time + 900`.
+
+Immediate execution [`0x976be31d39f4a71f671bd431a505d3852a061e53c6eb948f94c7ea6a650e6045`](https://explorer-studio.genlayer.com/tx/0x976be31d39f4a71f671bd431a505d3852a061e53c6eb948f94c7ea6a650e6045) finalized consensus at `2026-11-05T20:24:06Z` but rolled back with `TIMELOCK_ACTIVE`; the proposal remained queued. After repeated on-chain readbacks confirmed the deadline had passed (`now = 1793911408`, `available_at = 1793911020`), final execution [`0x4b908232661e5c176ae162a9e06da6dfa41ac291c6e3afd1c3fbd90a08434835`](https://explorer-studio.genlayer.com/tx/0x4b908232661e5c176ae162a9e06da6dfa41ac291c6e3afd1c3fbd90a08434835) finalized at `2026-11-05T20:43:48Z` with leader `SUCCESS`. Readback is `status = EXECUTED`, `execution_head = eb6008a6a5a04e4ef2382b235b93184b9535bab31e6635ede20c5f4f5489cfad`, charter `version = 2`, and the replacement policy no longer contains the withdrawal right.
+
+The first four member broadcasts used plain strings and rolled back with the stable runtime error `str` has no `as_bytes`; they mutated no state. The successful retries above used `genlayer-js/types.CalldataAddress`, demonstrating that the live path uses the proper typed GenLayer address encoding required by the ABI.
+
+This is a shortened-delay integration test only. It proves the 900-second test variant's state machine and finality, not the passage of the canonical production 86400-second timelock. Production remains unchanged and its removal was intentionally canceled after the early-rejection proof.
