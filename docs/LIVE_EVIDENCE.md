@@ -87,10 +87,11 @@ not only through the explorer summary:
 - [`0x2f8feff1215f3d483709307e6fc38353087cf96578f566cefe0803eeb38f484e`](https://explorer-studio.genlayer.com/tx/0x2f8feff1215f3d483709307e6fc38353087cf96578f566cefe0803eeb38f484e)
   finalized as `MAJORITY_DISAGREE`.
 - The leader executed with `SUCCESS` and no GenVM error.
-- The vote map contained three `disagree` votes, one `agree` vote and one
-  `idle` validator. The three disagreeing validator receipts had
-  `execution_result: SUCCESS`, no `genvm_result.error_code`, empty stdout and
-  stderr, and `nondet_disagree: 0`. The idle validator reported only
+- The aggregate vote map contained three `disagree` votes, one `agree` vote
+  and one `idle` validator. The non-idle disagree entries exposed in the
+  receipt and consensus history had `execution_result: SUCCESS`, no
+  `genvm_result.error_code`, empty stdout and stderr, and
+  `nondet_disagree: 0`. The idle validator reported only
   `CONSENSUS_VALIDATOR_QUORUM_REACHED`, which is cancellation after quorum,
   not the cause of the disagreement.
 - The earlier M-tier, disguised-R and clear-R attempts show the same pattern:
